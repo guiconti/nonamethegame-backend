@@ -1,17 +1,26 @@
 const database = require('../models/database');
 
-module.exports = (table, filter = {}, select = [], offset = 0, limit = 0, lean = true) => {
+module.exports = (
+  table,
+  filter = {},
+  select = [],
+  offset = 0,
+  limit = 0,
+  lean = true,
+  populate = { path: '', select: '' }
+) => {
   return new Promise((resolve, reject) => {
     if (limit === 1) {
       return database[table]
         .findOne(filter)
         .select(select)
+        .populate(populate)
         .orFail()
         .lean(lean)
-        .then(result => {
+        .then((result) => {
           return resolve(result);
         })
-        .catch(err => {
+        .catch((err) => {
           return reject(err);
         });
     }
@@ -22,10 +31,10 @@ module.exports = (table, filter = {}, select = [], offset = 0, limit = 0, lean =
       .skip(Number.isNaN(offset) ? 0 : Number(offset))
       .limit(Number.isNaN(limit) ? 0 : Number(limit))
       .lean(lean)
-      .then(result => {
+      .then((result) => {
         return resolve(result);
       })
-      .catch(err => {
+      .catch((err) => {
         return reject(err);
       });
   });

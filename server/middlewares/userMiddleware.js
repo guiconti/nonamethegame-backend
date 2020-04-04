@@ -26,20 +26,32 @@ module.exports = (req, res, next) => {
     req.cookies.session,
     constants.values.cryptography.SESSION_SIGNATURE_KEY
   );
-
   if (!_id) {
     return next(new InvalidSession());
   }
 
-  return findDatabase(constants.tables.USERS, { _id }, constants.selections.USER_WITH_PROFILE_DATA, 0, 1, false)
-    .then(user => {
+  let populate = constants.populations.EMPTY;
+  if (constants.populationsPath.ADD_MAP_TO_ADVENTURER.includes(req.baseUrl + req.url)) {
+    populate = constants.populations.GET_ADVENTURER_MAP_TO_USER;
+  }
+  
+  return findDatabase(
+    constants.tables.USERS,
+    { _id },
+    constants.selections.USER_WITH_PROFILE_DATA,
+    0,
+    1,
+    false,
+    populate
+  )
+    .then((user) => {
       if (!user) {
         return next(new InvalidSession());
       }
       req.user = user;
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       return next(err);
     });
 };

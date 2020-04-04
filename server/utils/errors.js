@@ -32,9 +32,18 @@ class InvalidId extends Error {
   }
 }
 
+class InvalidSelectAdventurer extends Error {
+  constructor(...args) {
+    super(...args);
+    this.name = constants.error.name.INVALID_SELECTED_ADVENTURER
+    Error.captureStackTrace(this, InvalidSelectAdventurer);
+  }
+}
+
 module.exports = {
   NotFound,
   InvalidAuth,
   InvalidSession,
   InvalidId,
+  InvalidSelectAdventurer,
 };

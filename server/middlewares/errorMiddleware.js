@@ -52,6 +52,10 @@ module.exports = (err, req, res, next) => {
       return res.status(400).json({
         data: messages.error.INVALID_ID,
       });
+    case error.name.INVALID_SELECTED_ADVENTURER:
+      return res.status(400).json({
+        data: messages.error.INVALID_SELECTED_ADVENTURER,
+      });
     default:
       break;
   }
