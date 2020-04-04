@@ -46,12 +46,23 @@ module.exports = {
     ],
   },
   endpoints: {
+    RETRIEVE_MAP: '/:id',
   },
   tables: {
     USERS: 'Users',
     ADVENTURERS: 'Adventurers',
+    MAPS: 'Maps',
   },
   selections: {
     USER_WITH_PROFILE_DATA: ['_id', 'email', 'selectedAdventurer'],
+  },
+  tiles: {
+    GROUND: 'G',
+    WALL: 'W',
+    PORTAL: 'P',
+    NPC: 'N',
+  },
+  paths: {
+    MAPS: `${process.cwd()}/server/game/maps/`,
   },
 };
