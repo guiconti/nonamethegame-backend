@@ -58,9 +58,16 @@ module.exports = mongoose => {
       type: Object,
       required: true,
     },
-    currentMap:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Maps'
+    currentMap: {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Maps',
+        required: true,
+      },
+      position: {
+        type: Object,
+        required: true,
+      },
     }
   });
 };

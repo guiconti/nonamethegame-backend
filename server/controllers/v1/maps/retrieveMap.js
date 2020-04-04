@@ -37,9 +37,7 @@ module.exports = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-  console.time('Read map');
   const mapFile = require(`${paths.MAPS}${map.file}`);
-  console.timeEnd('Read map');
   return res.status(200).json({
     data: {
       map: mapFile.layout,
