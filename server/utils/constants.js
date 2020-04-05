@@ -6,7 +6,8 @@ module.exports = {
       UNIQUE_CONSTRAINT: 'Data sent is violating a unique constraint.',
       INVALID_JSON: 'Data sent is an invalid json.',
       DOCUMENT_NOT_FOUND: 'No data found.',
-      INVALID_SELECTED_ADVENTURER: 'You need to select an adventurer to use this feature.',
+      INVALID_SELECTED_ADVENTURER:
+        'You need to select an adventurer to use this feature.',
       UNEXPECTED_RUNNING:
         'An unexpected error occurred while processing your request.',
     },
@@ -50,6 +51,7 @@ module.exports = {
   endpoints: {
     RETRIEVE_ADVENTURER_MAP: '/',
     RETRIEVE_MAP: '/:id',
+    CONNECT: '/connect',
   },
   tables: {
     USERS: 'Users',
@@ -60,17 +62,22 @@ module.exports = {
     USER_WITH_PROFILE_DATA: ['_id', 'email', 'selectedAdventurer'],
   },
   populationsPath: {
-    ADD_MAP_TO_ADVENTURER: ['/v1/map/']
+    ADD_MAP_TO_ADVENTURER: [
+      '/v1/map',
+      '/v1/map/',
+      '/v1/game/connect',
+      '/v1/game/connect/',
+    ],
   },
   populations: {
     GET_ADVENTURER_MAP_TO_USER: {
       path: 'selectedAdventurer',
-      select: ['currentMap']
+      select: ['currentMap'],
     },
     EMPTY: {
       path: '',
-      select: []
-    }
+      select: [],
+    },
   },
   tiles: {
     GROUND: 'G',
@@ -80,5 +87,13 @@ module.exports = {
   },
   paths: {
     MAPS: `${process.cwd()}/server/game/maps/`,
+  },
+  cachePaths: {
+    CONNECTED_ADVENTURERS: 'CONNECTED_ADVENTURERS',
+    MAP_PREFIX: 'map-',
+  },
+  cacheTtls: {
+    CONNECTED_ADVENTURERS: 0,
+    MAP: 0,
   },
 };
