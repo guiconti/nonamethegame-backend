@@ -96,4 +96,7 @@ module.exports = {
     CONNECTED_ADVENTURERS: 0,
     MAP: 0,
   },
+  sockets: {
+    CONNECT: 'connect',
+  },
 };

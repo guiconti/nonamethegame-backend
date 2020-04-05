@@ -7,7 +7,10 @@ const app =
     : require('./serverDevelopment');
 const { PORT } = process.env;
 
-app.listen(PORT, error => {
+const server = require('http').createServer(app);
+require('../server/utils/webSocket').initialize(server);
+
+server.listen(PORT, (error) => {
   if (error) {
     console.log(error);
   } else {

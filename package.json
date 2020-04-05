@@ -32,7 +32,8 @@
     "javascript-custom-logger": "1.0.2",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.7",
-    "node-cache": "5.1.0"
+    "node-cache": "5.1.0",
+    "socket.io": "2.3.0"
   },
   "devDependencies": {
     "apidoc": "0.17.7",
