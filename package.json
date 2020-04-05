@@ -31,7 +31,8 @@
     "express": "4.17.1",
     "javascript-custom-logger": "1.0.2",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "5.9.7"
+    "mongoose": "5.9.7",
+    "node-cache": "5.1.0"
   },
   "devDependencies": {
     "apidoc": "0.17.7",

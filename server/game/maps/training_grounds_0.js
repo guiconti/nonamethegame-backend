@@ -2,17 +2,16 @@ const { tiles } = require('../../utils/constants');
 
 module.exports = {
   layout: [
-    [tiles.GROUND.repeat(4) + tiles.PORTAL + tiles.GROUND.repeat(5)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
-    [tiles.GROUND.repeat(10)],
+    tiles.GROUND.repeat(4) + tiles.PORTAL + tiles.GROUND.repeat(5),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
+    tiles.GROUND.repeat(10),
   ],
   metadata: {
     portals: [
@@ -23,5 +22,7 @@ module.exports = {
         },
       },
     ],
+    monsters: [],
+    adventurers: [],
   },
 };
