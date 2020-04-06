@@ -89,14 +89,19 @@ module.exports = {
     MAPS: `${process.cwd()}/server/game/maps/`,
   },
   cachePaths: {
+    ACTIVE_MAPS: 'ACTIVE_MAPS',
     CONNECTED_ADVENTURERS: 'CONNECTED_ADVENTURERS',
-    MAP_PREFIX: 'map-',
+    MAP_PREFIX: 'MAP-',
   },
   cacheTtls: {
+    ACTIVE_MAPS: 0,
     CONNECTED_ADVENTURERS: 0,
     MAP: 0,
   },
   sockets: {
     CONNECT: 'connect',
+  },
+  engine: {
+    TICK_RATE: 60,
   },
 };
