@@ -60,6 +60,7 @@ module.exports = {
   },
   selections: {
     USER_WITH_PROFILE_DATA: ['_id', 'email', 'selectedAdventurer'],
+    ADVENTURER_WITH_MAP_ONLY: ['currentMap'],
   },
   populationsPath: {
     ADD_MAP_TO_ADVENTURER: [
@@ -85,6 +86,9 @@ module.exports = {
     PORTAL: 'P',
     NPC: 'N',
   },
+  game: {
+    VISION_RANGE: 6,
+  },
   paths: {
     MAPS: `${process.cwd()}/server/game/maps/`,
   },
@@ -100,6 +104,9 @@ module.exports = {
   },
   sockets: {
     CONNECT: 'connect',
+    CONNECTED: 'connected',
+    DISCONNECT: 'disconnect',
+    MAP_METADATA: 'map_metadata',
   },
   engine: {
     TICK_RATE: 60,
