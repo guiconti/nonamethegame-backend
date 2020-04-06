@@ -88,6 +88,11 @@ module.exports = {
   },
   game: {
     VISION_RANGE: 6,
+    MOVEMENTS: ['UP', 'DOWN', 'LEFT', 'RIGHT'],
+    UP: 'UP',
+    DOWN: 'DOWN',
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT',
   },
   paths: {
     MAPS: `${process.cwd()}/server/game/maps/`,
@@ -96,17 +101,22 @@ module.exports = {
     ACTIVE_MAPS: 'ACTIVE_MAPS',
     CONNECTED_ADVENTURERS: 'CONNECTED_ADVENTURERS',
     MAP_PREFIX: 'MAP-',
+    ADVENTURER_PREFIX: 'ADVENTURER-',
+    ADVENTURER_MANUAL_ACTIONS_PREFIX: 'ADVENTURER_MANUAL-',
   },
   cacheTtls: {
     ACTIVE_MAPS: 0,
     CONNECTED_ADVENTURERS: 0,
     MAP: 0,
+    ADVENTURER: 0,
+    ADVENTURER_MANUAL_ACTIONS: 10
   },
   sockets: {
     CONNECT: 'connect',
     CONNECTED: 'connected',
     DISCONNECT: 'disconnect',
-    MAP_METADATA: 'map_metadata',
+    GAME_METADATA: 'game_metadata',
+    ADVENTURER_MOVE: 'adventurer_move',
   },
   engine: {
     TICK_RATE: 60,

@@ -1,6 +1,6 @@
 const getActiveMaps = require('../game/utils/getActiveMaps');
 const getMap = require('../game/utils/getMap');
-const getMapMetadataForAdventurers = require('../game/getMapMetadataForAdventurers');
+const gameLoop = require('../game/gameLoop');
 const sendAdventurersMetadatas = require('./sendAdventurersMetadatas');
 const { engine } = require('../utils/constants');
 
@@ -30,7 +30,7 @@ class Engine {
         //  Execute monster actions
         //  Update maps
         //  Send to each player it's map vision
-        const adventurersMapMetadatas = getMapMetadataForAdventurers(currentMap);
+        const adventurersMapMetadatas = await gameLoop(currentMap, mapId);
         sendAdventurersMetadatas(adventurersMapMetadatas);
       } catch(err) {
         return;

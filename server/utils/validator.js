@@ -1,4 +1,4 @@
-const { values } = require('./constants');
+const { values, game } = require('./constants');
 
 /**
  * Validate if the input is a valid JSON
@@ -25,4 +25,14 @@ exports.isValidString = stringToValidate => {
   return (
     typeof stringToValidate === 'string' && stringToValidate.trim().length > 0
   );
+};
+
+/**
+ * Validate if the input is a valid movement
+ *
+ * @param {string} movementToValidate - Movement to be validated
+ * @return {boolean} - True case the string is valid and false if it is not
+ */
+exports.isValidMovement = movementToValidate => {
+  return game.MOVEMENTS.includes(movementToValidate);
 };

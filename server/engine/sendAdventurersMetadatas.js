@@ -7,7 +7,7 @@ module.exports = (adventurersMetadatas) => {
     for (let i = 0; i < adventurersIds.length; i++) {
       webSocket.emit(
         adventurersIds[i],
-        sockets.MAP_METADATA,
+        sockets.GAME_METADATA,
         adventurersMetadatas[adventurersIds[i]]
       );
     }

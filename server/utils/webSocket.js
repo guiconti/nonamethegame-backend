@@ -3,7 +3,8 @@ const { sockets, values, tables, selections } = require('./constants');
 const tokenDecryptor = require('./tokenDecryptor');
 const findDatabase = require('./findDatabase');
 const disconnectAdventurer = require('../game/utils/disconnectAdventurer');
-const { isValidString } = require('./validator');
+const addManualAction = require('../game/addManualAction');
+const { isValidString, isValidMovement } = require('./validator');
 
 let io;
 
@@ -53,6 +54,12 @@ exports.initialize = (server) => {
     this.emit(adventurerId, sockets.CONNECTED);
     socket.on(sockets.DISCONNECT, () => {
       disconnectAdventurer(adventurerId);
+    });
+    socket.on(sockets.ADVENTURER_MOVE, async movement => {
+      if (!isValidMovement(movement)) {
+        return;
+      }
+      addManualAction(adventurerId, { movement });
     });
   });
 };

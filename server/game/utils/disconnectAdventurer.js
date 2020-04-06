@@ -1,21 +1,15 @@
-const findDatabase = require('../../utils/findDatabase');
+const getAdventurer = require('./getAdventurer');
 const getConnectedAdventurers = require('./getConnectedAdventurers');
 const getMap = require('./getMap');
 const getActiveMaps = require('./getActiveMaps');
 const cache = require('../../utils/cache');
-const { tables, selections, cachePaths, cacheTtls } = require('../../utils/constants');
+const { cachePaths, cacheTtls } = require('../../utils/constants');
 
 module.exports = async (adventurerId) => {
   let adventurer;
   let mapId;
   try {
-    adventurer = await findDatabase(
-      tables.ADVENTURERS,
-      { _id: adventurerId },
-      selections.ADVENTURER_WITH_MAP_ONLY,
-      0,
-      1
-    );
+    adventurer = await getAdventurer(String(adventurerId));
     mapId = String(adventurer.currentMap.id);
   } catch (err) {
     return;
