@@ -12,40 +12,37 @@
  */
 
 const cache = require('../../../utils/cache');
-const getMap = require('../../../game/utils/getMap');
 const getConnectedAventurers = require('../../../game/utils/getConnectedAdventurers');
-const getActiveMaps = require('../../../game/utils/getActiveMaps');
+const getQueueToConnectAdventurers = require('../../../game/utils/getQueueToConnectAdventurers');
 const { cachePaths, cacheTtls } = require('../../../utils/constants');
 
 module.exports = async (req, res, next) => {
   const adventurerId = String(req.user.selectedAdventurer._id);
-  const mapId = String(req.user.selectedAdventurer.currentMap.id);
   let connectedAdventurers;
-  let map;
-  let activeMaps;
-
   try {
     connectedAdventurers = await getConnectedAventurers();
-    map = await getMap(mapId);
-    activeMaps = await getActiveMaps();
-  } catch(err) {
+  } catch (err) {
     return next(err);
   }
-  
-  if (!connectedAdventurers.includes(adventurerId)) {
-    connectedAdventurers.push(adventurerId);
+  if (connectedAdventurers.includes(adventurerId)) {
+    return res.status(200).json();
   }
-  if (!map.metadata.adventurers[adventurerId]) {
-    map.metadata.adventurers[adventurerId] = {
-      position: req.user.selectedAdventurer.currentMap.position
-    };
+
+  let queueToConnectAdventurers;
+  try {
+    queueToConnectAdventurers = await getQueueToConnectAdventurers();
+  } catch (err) {
+    return next(err);
   }
-  if (!activeMaps.includes(mapId)) {
-    activeMaps.push(mapId);
+  if (queueToConnectAdventurers.includes(adventurerId)) {
+    return res.status(200).json();
   }
-  //  TODO: Check if we need to spawn monsters
-  cache.set(cachePaths.CONNECTED_ADVENTURERS, connectedAdventurers, cacheTtls.CONNECTED_ADVENTURERS);
-  cache.set(cachePaths.MAP_PREFIX + mapId, map, cacheTtls.MAP);
-  cache.set(cachePaths.ACTIVE_MAPS, activeMaps, cacheTtls.ACTIVE_MAPS);
+
+  queueToConnectAdventurers.push(adventurerId);
+  cache.set(
+    cachePaths.QUEUE_TO_CONNECT_ADVENTURERS,
+    queueToConnectAdventurers,
+    cacheTtls.QUEUE_TO_CONNECT_ADVENTURERS
+  );
   return res.status(200).json();
 };

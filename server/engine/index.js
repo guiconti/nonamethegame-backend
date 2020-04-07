@@ -1,3 +1,4 @@
+const connectAdventurers = require('../game/connectAdventurers');
 const getActiveMaps = require('../game/utils/getActiveMaps');
 const getMap = require('../game/utils/getMap');
 const gameLoop = require('../game/gameLoop');
@@ -20,6 +21,8 @@ class Engine {
   }
 
   async _run() {
+    //  Connect players
+    await connectAdventurers();
     try {
       this.activeMaps = await getActiveMaps();
     } catch (err) {

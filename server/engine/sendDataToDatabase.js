@@ -1,9 +1,12 @@
+const getConnectedAdventurers = require('../game/utils/getConnectedAdventurers');
 const getAdventurer = require('../game/utils/getAdventurer');
 const updateDatabase = require('../utils/updateDatabase');
+const deleteInactiveAdventurerDataFromCache = require('./deleteInactiveAdventurerDataFromCache');
 const { tables } = require('../utils/constants');
 
-module.exports = map => {
+module.exports = (map, mapId) => {
   return new Promise(async (resolve, reject) => {
+    const connectedAdventurers = await getConnectedAdventurers();
     const adventurersIds = Object.keys(map.metadata.adventurers);
     for (let i = 0; i < adventurersIds.length; i++) {
       const adventurer = await getAdventurer(adventurersIds[i]);
@@ -19,7 +22,11 @@ module.exports = map => {
         attributes: adventurer.attributes,
         currentMap: adventurer.currentMap
       };
-      updateDatabase(tables, adventurersIds[i], adventurerDataToBeUpdated);
+      updateDatabase(tables.ADVENTURERS, adventurersIds[i], adventurerDataToBeUpdated);
+      const adventurerIndex = connectedAdventurers.indexOf(adventurersIds[i]);
+      if (adventurerIndex === -1) {
+        deleteInactiveAdventurerDataFromCache(map, mapId, adventurersIds[i]);
+      }
     }
   });
 };
