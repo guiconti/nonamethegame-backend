@@ -1,8 +1,13 @@
 const findDatabase = require('../../utils/findDatabase');
 const cache = require('../../utils/cache');
-const { cachePaths, cacheTtls, tables, paths } = require('../../utils/constants');
+const {
+  cachePaths,
+  cacheTtls,
+  tables,
+  paths,
+} = require('../../utils/constants');
 
-module.exports = mapId => {
+module.exports = (mapId) => {
   return new Promise(async (resolve, reject) => {
     let mapData = cache.get(cachePaths.MAP_PREFIX + mapId);
     if (mapData) {
@@ -10,18 +15,12 @@ module.exports = mapId => {
     }
     let map;
     try {
-      map = await findDatabase(
-        tables.MAPS,
-        { _id: mapId },
-        [],
-        0,
-        1
-      );
+      map = await findDatabase(tables.MAPS, { _id: mapId }, [], 0, 1);
     } catch (err) {
       return reject(err);
     }
-    mapData = require(`${paths.MAPS}${map.file}`);
+    mapData = JSON.parse(JSON.stringify(require(`${paths.MAPS}${map.file}`)));
     cache.set(cachePaths.MAP_PREFIX + mapId, mapData, cacheTtls.MAP);
     return resolve(mapData);
   });
-}
+};

@@ -3,7 +3,7 @@ const adventurerMetadataTemplate = require('./adventurerMetadataTemplate');
 const cache = require('../../utils/cache');
 const { cachePaths, cacheTtls, tables } = require('../../utils/constants');
 
-module.exports = adventurerId => {
+module.exports = (adventurerId) => {
   return new Promise(async (resolve, reject) => {
     let adventurerData = cache.get(cachePaths.ADVENTURER_PREFIX + adventurerId);
     if (adventurerData) {
@@ -21,8 +21,15 @@ module.exports = adventurerId => {
     } catch (err) {
       return reject(err);
     }
-    adventurerData = { ...adventurer, ...adventurerMetadataTemplate };
-    cache.set(cachePaths.ADVENTURER_PREFIX + adventurerId, adventurerData, cacheTtls.ADVENTURER);
+    const newAdventurerMetadataTemplate = JSON.parse(
+      JSON.stringify(adventurerMetadataTemplate)
+    );
+    adventurerData = { ...adventurer, ...newAdventurerMetadataTemplate };
+    cache.set(
+      cachePaths.ADVENTURER_PREFIX + adventurerId,
+      adventurerData,
+      cacheTtls.ADVENTURER
+    );
     return resolve(adventurerData);
   });
-}
+};
