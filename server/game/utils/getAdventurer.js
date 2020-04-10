@@ -3,6 +3,8 @@ const adventurerMetadataTemplate = require('./adventurerMetadataTemplate');
 const cache = require('../../utils/cache');
 const { cachePaths, cacheTtls, tables } = require('../../constants');
 
+let alreadyRetrievingAdventurer = false;
+
 module.exports = (adventurerId, onlyFromCache) => {
   return new Promise(async (resolve, reject) => {
     let adventurerData = cache.get(cachePaths.ADVENTURER_PREFIX + adventurerId);
@@ -13,6 +15,10 @@ module.exports = (adventurerId, onlyFromCache) => {
     if (onlyFromCache) {
       reject();
     }
+    if (alreadyRetrievingAdventurer) {
+      return reject();
+    }
+    alreadyRetrievingAdventurer = true;
     let adventurer;
     try {
       adventurer = await findDatabase(
@@ -34,6 +40,7 @@ module.exports = (adventurerId, onlyFromCache) => {
       adventurerData,
       cacheTtls.ADVENTURER
     );
+    alreadyRetrievingAdventurer = false;
     return resolve(adventurerData);
   });
 };

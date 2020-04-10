@@ -7,6 +7,8 @@ const {
   paths,
 } = require('../../constants');
 
+let alreadyRetrievingMap = false;
+
 module.exports = (mapId, onlyFromCache) => {
   return new Promise(async (resolve, reject) => {
     let mapData = cache.get(cachePaths.MAP_PREFIX + mapId);
@@ -16,6 +18,10 @@ module.exports = (mapId, onlyFromCache) => {
     if (onlyFromCache) {
       reject();
     }
+    if (alreadyRetrievingMap) {
+      return reject();
+    }
+    alreadyRetrievingMap = true;
     let map;
     try {
       map = await findDatabase(tables.MAPS, { _id: mapId }, [], 0, 1);
@@ -26,6 +32,7 @@ module.exports = (mapId, onlyFromCache) => {
     mapData.spawn = map.spawn;
     //  Fill monsters
     cache.set(cachePaths.MAP_PREFIX + mapId, mapData, cacheTtls.MAP);
+    alreadyRetrievingMap = false;
     return resolve(mapData);
   });
 };
