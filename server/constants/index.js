@@ -13,6 +13,7 @@ const cacheTtls = require('./cacheTtls');
 const sockets = require('./sockets');
 const engine = require('./engine');
 const game = require('./game');
+const monster = require('./monster');
 
 module.exports = {
   messages,
@@ -30,4 +31,5 @@ module.exports = {
   sockets,
   engine,
   game,
+  monster,
 };
