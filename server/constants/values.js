@@ -7,6 +7,9 @@ module.exports = {
   cookies: {
     SESSION: 'session',
   },
+  ONE_SECOND_IN_MILLISECONDS: 1000,
+  ONE_MILLISECOND_IN_NANOSECONDS: 1000000,
+  ONE_SECOND_IN_NANOSECONDS: 1000000000,
   CLASSES: ['Swordsman', 'Mage', 'Thief'],
   RACES: ['Human', 'Lizard', 'Undead', 'Dwarf', 'Elf'],
   ATTRIBUTES: ['strength', 'intelligence', 'agility', 'dexterity', 'vitality'],
