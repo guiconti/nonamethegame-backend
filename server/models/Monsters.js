@@ -17,6 +17,11 @@ module.exports = mongoose => {
       required: true,
       default: 100,
     },
+    currentHealth: {
+      type: Number,
+      required: true,
+      default: 100,
+    },
     experience: {
       type: Number,
       required: true,
