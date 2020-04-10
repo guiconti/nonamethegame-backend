@@ -26,6 +26,7 @@
     "no-param-reassign": ["error", { "props": false }],
     "no-underscore-dangle": "off",
     "node/no-unpublished-require": "off",
-    "promise/no-callback-in-promise": "off"
+    "promise/no-callback-in-promise": "off",
+    "no-plusplus": "off"
   }
 }
