@@ -7,11 +7,14 @@ const {
   paths,
 } = require('../../constants');
 
-module.exports = (mapId) => {
+module.exports = (mapId, onlyFromCache) => {
   return new Promise(async (resolve, reject) => {
     let mapData = cache.get(cachePaths.MAP_PREFIX + mapId);
     if (mapData) {
       return resolve(mapData);
+    }
+    if (onlyFromCache) {
+      reject();
     }
     let map;
     try {

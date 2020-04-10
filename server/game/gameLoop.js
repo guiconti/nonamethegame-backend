@@ -74,9 +74,13 @@ module.exports = async (map, mapId) => {
   const adventurersIds = Object.keys(map.metadata.adventurers);
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
-    adventurersMetadatas[adventurersIds[i]] = await getAdventure(
-      adventurersIds[i]
-    );
+    try {
+      adventurersMetadatas[adventurersIds[i]] = await getAdventure(
+        adventurersIds[i], true
+      );
+    } catch(err) {
+      continue;
+    }
     //  Update cooldown and status
     updateMovementCooldown(adventurersMetadatas[adventurersIds[i]]);
     adventurersMetadatas[adventurersIds[i]].manualActions = getManualAction(adventurersIds[i]);
@@ -99,7 +103,6 @@ module.exports = async (map, mapId) => {
     );
   }
   for (let i = 0; i < adventurersIds.length; i++) {
-    console.log(adventurersMetadatas[adventurersIds[i]]);
     cache.set(
       cachePaths.ADVENTURER_PREFIX + adventurersIds[i],
       adventurersMetadatas[adventurersIds[i]],

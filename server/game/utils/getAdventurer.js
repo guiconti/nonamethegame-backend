@@ -3,11 +3,15 @@ const adventurerMetadataTemplate = require('./adventurerMetadataTemplate');
 const cache = require('../../utils/cache');
 const { cachePaths, cacheTtls, tables } = require('../../constants');
 
-module.exports = (adventurerId) => {
+module.exports = (adventurerId, onlyFromCache) => {
   return new Promise(async (resolve, reject) => {
     let adventurerData = cache.get(cachePaths.ADVENTURER_PREFIX + adventurerId);
     if (adventurerData) {
       return resolve(adventurerData);
+    }
+    //  Dont block getting from database
+    if (onlyFromCache) {
+      reject();
     }
     let adventurer;
     try {
