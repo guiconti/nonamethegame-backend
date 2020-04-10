@@ -1,3 +1,4 @@
+const logger = require('javascript-custom-logger');
 const connectAdventurers = require('../game/connectAdventurers');
 const getActiveMaps = require('../game/utils/getActiveMaps');
 const getMap = require('../game/utils/getMap');
@@ -39,7 +40,11 @@ class Engine {
     // }
     const [secondsStart, nanosecondsStart] = process.hrtime();
     //  Connect players
-    await connectAdventurers();
+    try {
+      await connectAdventurers();
+    } catch(err) {
+      logger.error(err);
+    }
     try {
       this.activeMaps = await getActiveMaps();
     } catch (err) {
@@ -58,9 +63,8 @@ class Engine {
         const adventurersMapMetadatas = await gameLoop(currentMap, mapId);
         sendAdventurersMetadatas(adventurersMapMetadatas);
       } catch (err) {
-        return;
+        logger.error(err);
       }
-      return;
     });
     let [secondsEnd, nanosecondsEnd] = process.hrtime();
     if (secondsStart !== secondsEnd) {
@@ -92,7 +96,6 @@ class Engine {
       } catch (err) {
         return;
       }
-      return;
     });
   }
 

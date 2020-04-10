@@ -5,4 +5,5 @@ module.exports = {
   MAP: 0,
   ADVENTURER: 0,
   ADVENTURER_MANUAL_ACTIONS: 10,
+  MONSTER: 0,
 };

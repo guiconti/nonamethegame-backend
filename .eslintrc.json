@@ -27,6 +27,7 @@
     "no-underscore-dangle": "off",
     "node/no-unpublished-require": "off",
     "promise/no-callback-in-promise": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "no-await-in-loop": "off"
   }
 }

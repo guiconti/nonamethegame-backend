@@ -75,6 +75,7 @@ module.exports = async (map, mapId) => {
   //  Core loop
   const adventurersIds = Object.keys(map.metadata.adventurers);
   const monstersIds = Object.keys(map.metadata.monsters);
+
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
     try {
