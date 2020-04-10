@@ -1,8 +1,8 @@
-const { values } = require('../constants');
+const { values, game } = require('../constants');
 
 module.exports = mongoose => {
   return new mongoose.Schema({
-    user :{
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Users'
     },
@@ -57,6 +57,16 @@ module.exports = mongoose => {
     attributes: {
       type: Object,
       required: true,
+    },
+    sightRange: {
+      type: Number,
+      required: true,
+      default: game.DEFAULT_SIGHT_RANGE
+    },
+    attackRange: {
+      type: Number,
+      required: true,
+      default: game.DEFAULT_ATTACK_RANGE
     },
     currentMap: {
       id: {

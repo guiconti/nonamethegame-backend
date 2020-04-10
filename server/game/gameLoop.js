@@ -7,7 +7,7 @@ const updateMovementCooldown = require('./updateMovementCooldown');
 const moveAdventurer = require('./moveAdventurer');
 
 const cache = require('../utils/cache');
-const { game, cachePaths, cacheTtls } = require('../constants');
+const { cachePaths, cacheTtls } = require('../constants');
 
 const metadataTemplate = (metadata) => {
   return {
@@ -20,6 +20,7 @@ const metadataTemplate = (metadata) => {
 
 const monstersInteractions = (
   adventurersMapMetadatas,
+  adventurer,
   adventurerId,
   monstersIds,
   metadata
@@ -32,7 +33,7 @@ const monstersInteractions = (
     //  Add to map vision if close enough
     const xDistance = Math.abs(monsterPosition.x - adventurerPosition.x);
     const yDistance = Math.abs(monsterPosition.y - adventurerPosition.y);
-    if (xDistance <= game.VISION_RANGE && yDistance <= game.VISION_RANGE) {
+    if (xDistance <= adventurer.sightRange && yDistance <= adventurer.sightRange) {
       adventurersMapMetadatas[adventurerId].monsters[monsterId] =
         metadata.monsters[monsterId];
     }
@@ -42,6 +43,7 @@ const monstersInteractions = (
 
 const adventurersInteractions = (
   adventurersMapMetadatas,
+  adventurer,
   adventurerId,
   adventurersIds,
   metadata
@@ -59,7 +61,7 @@ const adventurersInteractions = (
     const yDistance = Math.abs(
       otherAdventurerPosition.y - adventurerPosition.y
     );
-    if (xDistance <= game.VISION_RANGE && yDistance <= game.VISION_RANGE) {
+    if (xDistance <= adventurer.sightRange && yDistance <= adventurer.sightRange) {
       adventurersMapMetadatas[adventurerId].adventurers[otherAdventurerId] =
         metadata.adventurers[otherAdventurerId];
     }
@@ -72,6 +74,7 @@ module.exports = async (map, mapId) => {
   const adventurersMetadatas = [];
   //  Core loop
   const adventurersIds = Object.keys(map.metadata.adventurers);
+  const monstersIds = Object.keys(map.metadata.monsters);
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
     try {
@@ -81,27 +84,34 @@ module.exports = async (map, mapId) => {
     } catch(err) {
       continue;
     }
+    const adventurer = adventurersMetadatas[adventurersIds[i]];
+
+    //  Get adventurers intents
+    adventurer.manualActions = getManualAction(adventurersIds[i]);
+
     //  Update cooldown and status
-    updateMovementCooldown(adventurersMetadatas[adventurersIds[i]]);
-    adventurersMetadatas[adventurersIds[i]].manualActions = getManualAction(adventurersIds[i]);
-    const monstersIds = Object.keys(map.metadata.monsters);
+    updateMovementCooldown(adventurer);
 
     //  Actions
     moveAdventurer(adventurersMetadatas, adventurersIds[i], map, monstersIds);
     adventurersMapMetadatas[adventurersIds[i]] = metadataTemplate(map.metadata);
     monstersInteractions(
       adventurersMapMetadatas,
+      adventurer,
       adventurersIds[i],
       monstersIds,
       map.metadata
     );
     adventurersInteractions(
       adventurersMapMetadatas,
+      adventurer,
       adventurersIds[i],
       adventurersIds,
       map.metadata
     );
   }
+
+  // Save data to cache and send to players
   for (let i = 0; i < adventurersIds.length; i++) {
     cache.set(
       cachePaths.ADVENTURER_PREFIX + adventurersIds[i],
