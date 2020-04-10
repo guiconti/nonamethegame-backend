@@ -6,7 +6,13 @@
 
 const tokenDecryptor = require('../utils/tokenDecryptor');
 const validator = require('../utils/validator');
-const constants = require('../utils/constants');
+const {
+  values,
+  populations,
+  populationsPaths,
+  tables,
+  selections,
+} = require('../constants');
 const findDatabase = require('../utils/findDatabase');
 const { InvalidSession } = require('../utils/errors');
 
@@ -24,21 +30,21 @@ module.exports = (req, res, next) => {
 
   const _id = tokenDecryptor(
     req.cookies.session,
-    constants.values.cryptography.SESSION_SIGNATURE_KEY
+    values.cryptography.SESSION_SIGNATURE_KEY
   );
   if (!_id) {
     return next(new InvalidSession());
   }
 
-  let populate = constants.populations.EMPTY;
-  if (constants.populationsPath.ADD_MAP_TO_ADVENTURER.includes(req.baseUrl + req.url)) {
-    populate = constants.populations.GET_ADVENTURER_MAP_TO_USER;
+  let populate = populations.EMPTY;
+  if (populationsPaths.ADD_MAP_TO_ADVENTURER.includes(req.baseUrl + req.url)) {
+    populate = populations.GET_ADVENTURER_MAP_TO_USER;
   }
-  
+
   return findDatabase(
-    constants.tables.USERS,
+    tables.USERS,
     { _id },
-    constants.selections.USER_WITH_PROFILE_DATA,
+    selections.USER_WITH_PROFILE_DATA,
     0,
     1,
     false,

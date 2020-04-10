@@ -1,6 +1,6 @@
 const getActiveMaps = require('../game/utils/getActiveMaps');
 const cache = require('../utils/cache');
-const { cachePaths, cacheTtls } = require('../utils/constants');
+const { cachePaths, cacheTtls } = require('../constants');
 
 module.exports = (map, mapId, adventurerId) => {
   return new Promise(async (resolve) => {

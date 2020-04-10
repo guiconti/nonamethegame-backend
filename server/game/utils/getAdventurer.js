@@ -1,7 +1,7 @@
 const findDatabase = require('../../utils/findDatabase');
 const adventurerMetadataTemplate = require('./adventurerMetadataTemplate');
 const cache = require('../../utils/cache');
-const { cachePaths, cacheTtls, tables } = require('../../utils/constants');
+const { cachePaths, cacheTtls, tables } = require('../../constants');
 
 module.exports = (adventurerId) => {
   return new Promise(async (resolve, reject) => {

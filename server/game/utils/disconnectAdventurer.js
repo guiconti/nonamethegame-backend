@@ -1,6 +1,6 @@
 const getConnectedAdventurers = require('./getConnectedAdventurers');
 const cache = require('../../utils/cache');
-const { cachePaths, cacheTtls } = require('../../utils/constants');
+const { cachePaths, cacheTtls } = require('../../constants');
 
 module.exports = async (adventurerId) => {
   let connectedAdventurers;

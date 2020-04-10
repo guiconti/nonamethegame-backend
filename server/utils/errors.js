@@ -1,9 +1,9 @@
-const constants = require('./constants');
+const { errors } = require('../constants');
 
 class NotFound extends Error {
   constructor(...args) {
     super(...args);
-    this.name = constants.error.name.NOT_FOUND;
+    this.name = errors.name.NOT_FOUND;
     Error.captureStackTrace(this, NotFound);
   }
 }
@@ -11,7 +11,7 @@ class NotFound extends Error {
 class InvalidAuth extends Error {
   constructor(...args) {
     super(...args);
-    this.name = constants.error.name.INVALID_AUTH;
+    this.name = errors.name.INVALID_AUTH;
     Error.captureStackTrace(this, InvalidAuth);
   }
 }
@@ -19,7 +19,7 @@ class InvalidAuth extends Error {
 class InvalidSession extends Error {
   constructor(...args) {
     super(...args);
-    this.name = constants.error.name.INVALID_SESSION;
+    this.name = errors.name.INVALID_SESSION;
     Error.captureStackTrace(this, InvalidSession);
   }
 }
@@ -27,7 +27,7 @@ class InvalidSession extends Error {
 class InvalidId extends Error {
   constructor(...args) {
     super(...args);
-    this.name = constants.error.name.INVALID_ATTRIBUTES
+    this.name = errors.name.INVALID_ATTRIBUTES
     Error.captureStackTrace(this, InvalidId);
   }
 }
@@ -35,7 +35,7 @@ class InvalidId extends Error {
 class InvalidSelectAdventurer extends Error {
   constructor(...args) {
     super(...args);
-    this.name = constants.error.name.INVALID_SELECTED_ADVENTURER
+    this.name = errors.name.INVALID_SELECTED_ADVENTURER
     Error.captureStackTrace(this, InvalidSelectAdventurer);
   }
 }

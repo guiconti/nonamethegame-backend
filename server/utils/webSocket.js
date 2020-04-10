@@ -1,5 +1,5 @@
 const socketIO = require('socket.io');
-const { sockets, values, tables, selections } = require('./constants');
+const { sockets, values, tables, selections } = require('../constants');
 const tokenDecryptor = require('./tokenDecryptor');
 const findDatabase = require('./findDatabase');
 const disconnectAdventurer = require('../game/utils/disconnectAdventurer');

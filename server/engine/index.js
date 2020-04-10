@@ -4,7 +4,7 @@ const getMap = require('../game/utils/getMap');
 const gameLoop = require('../game/gameLoop');
 const sendAdventurersMetadatas = require('./sendAdventurersMetadatas');
 const sendDataToDatabase = require('./sendDataToDatabase');
-const { engine } = require('../utils/constants');
+const { engine } = require('../constants');
 
 class Engine {
   constructor(settings = {}) {

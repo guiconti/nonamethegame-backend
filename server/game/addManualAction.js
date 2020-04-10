@@ -1,5 +1,5 @@
 const cache = require('../utils/cache');
-const { cachePaths, cacheTtls } = require('../utils/constants');
+const { cachePaths, cacheTtls } = require('../constants');
 const adventurerActionsTemplate = require('./utils/adventurerActionsTemplate');
 
 module.exports = (adventurerId, manualActions) => {

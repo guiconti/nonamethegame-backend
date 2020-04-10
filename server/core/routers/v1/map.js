@@ -1,6 +1,6 @@
 const express = require('express');
 const retrieveControllers = require('../../../utils/retrieveControllers');
-const { endpoints } = require('../../../utils/constants');
+const { endpoints } = require('../../../constants');
 const userMiddleware = require('../../../middlewares/userMiddleware');
 
 const router = express.Router();

@@ -3,7 +3,7 @@
  * @module utils/tokenDecryptor
  */
 const jwt = require('jsonwebtoken');
-const constants = require('./constants');
+const { values } = require('../constants');
 const decryptor = require('./decryptor');
 
 /**
@@ -23,7 +23,7 @@ module.exports = (token, key) => {
     if (!decodedToken || !decodedToken.token) return false;
     let decryptedData = decryptor(
       decodedToken.token,
-      constants.values.cryptography.TOKEN_KEY
+      values.cryptography.TOKEN_KEY
     );
     if (!decryptedData) return false;
 

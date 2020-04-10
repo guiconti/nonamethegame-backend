@@ -1,4 +1,4 @@
-const { values, game } = require('./constants');
+const { game } = require('../constants');
 
 /**
  * Validate if the input is a valid JSON

@@ -5,7 +5,7 @@ const {
   cacheTtls,
   tables,
   paths,
-} = require('../../utils/constants');
+} = require('../../constants');
 
 module.exports = (mapId) => {
   return new Promise(async (resolve, reject) => {

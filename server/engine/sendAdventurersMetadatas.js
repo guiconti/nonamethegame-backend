@@ -1,5 +1,5 @@
 const webSocket = require('../utils/webSocket');
-const { sockets } = require('../utils/constants');
+const { sockets } = require('../constants');
 
 module.exports = (adventurersMetadatas) => {
   return new Promise(() => {

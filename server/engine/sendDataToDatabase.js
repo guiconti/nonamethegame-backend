@@ -2,7 +2,7 @@ const getConnectedAdventurers = require('../game/utils/getConnectedAdventurers')
 const getAdventurer = require('../game/utils/getAdventurer');
 const updateDatabase = require('../utils/updateDatabase');
 const deleteInactiveAdventurerDataFromCache = require('./deleteInactiveAdventurerDataFromCache');
-const { tables } = require('../utils/constants');
+const { tables } = require('../constants');
 
 module.exports = (map, mapId) => {
   return new Promise(async (resolve, reject) => {

@@ -14,7 +14,7 @@
 const cache = require('../../../utils/cache');
 const getConnectedAventurers = require('../../../game/utils/getConnectedAdventurers');
 const getQueueToConnectAdventurers = require('../../../game/utils/getQueueToConnectAdventurers');
-const { cachePaths, cacheTtls } = require('../../../utils/constants');
+const { cachePaths, cacheTtls } = require('../../../constants');
 
 module.exports = async (req, res, next) => {
   const adventurerId = String(req.user.selectedAdventurer._id);

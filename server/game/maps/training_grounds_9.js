@@ -1,4 +1,4 @@
-const { tiles } = require('../../utils/constants');
+const { tiles } = require('../../constants');
 
 module.exports = {
   layout: [

@@ -4,7 +4,7 @@ const getConnectedAdventurers = require('./utils/getConnectedAdventurers');
 const getMap = require('./utils/getMap');
 const getActiveMaps = require('./utils/getActiveMaps');
 const cache = require('../utils/cache');
-const { cachePaths, cacheTtls } = require('../utils/constants');
+const { cachePaths, cacheTtls } = require('../constants');
 
 module.exports = async () => {
   return new Promise(async (resolve, reject) => {

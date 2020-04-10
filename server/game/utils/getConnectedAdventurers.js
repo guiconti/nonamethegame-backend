@@ -1,5 +1,5 @@
 const cache = require('../../utils/cache');
-const { cachePaths } = require('../../utils/constants');
+const { cachePaths } = require('../../constants');
 
 module.exports = () => {
   return new Promise((resolve) => {
