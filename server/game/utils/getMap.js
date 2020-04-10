@@ -23,6 +23,8 @@ module.exports = (mapId, onlyFromCache) => {
       return reject(err);
     }
     mapData = JSON.parse(JSON.stringify(require(`${paths.MAPS}${map.file}`)));
+    mapData.spawn = map.spawn;
+    //  Fill monsters
     cache.set(cachePaths.MAP_PREFIX + mapId, mapData, cacheTtls.MAP);
     return resolve(mapData);
   });

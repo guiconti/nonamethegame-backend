@@ -29,7 +29,7 @@ module.exports = mongoose => {
     },
     property: {
       type: String,
-      enum: monster.PROPERITES,
+      enum: monster.PROPERTIES,
       required: true,
     },
     sightRange: {
