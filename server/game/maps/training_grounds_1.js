@@ -28,7 +28,5 @@ module.exports = {
         },
       },
     ],
-    monsters: [],
-    adventurers: [],
   },
 };

@@ -12,8 +12,8 @@ const { cachePaths, cacheTtls } = require('../constants');
 const metadataTemplate = (metadata) => {
   return {
     portals: metadata.portals,
-    monsters: [],
-    adventurers: [],
+    monsters: {},
+    adventurers: {},
     adventurer: {},
   };
 };

@@ -403,7 +403,5 @@ module.exports = {
   ],
   metadata: {
     portals: [],
-    monsters: [],
-    adventurers: [],
   },
 };

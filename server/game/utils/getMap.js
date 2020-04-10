@@ -27,6 +27,8 @@ module.exports = (mapId, onlyFromCache) => {
     }
     mapData = JSON.parse(JSON.stringify(require(`${paths.MAPS}${map.file}`)));
     mapData.spawn = map.spawn;
+    mapData.metadata.monsters = {};
+    mapData.metadata.adventurers = {};
     //  Fill monsters
     for (let i = 0; i < mapData.spawn.length; i++) {
       for (let j = 0; j < mapData.spawn[i].amount; j++) {
