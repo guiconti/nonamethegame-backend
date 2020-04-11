@@ -4,4 +4,5 @@ module.exports = {
   DISCONNECT: 'disconnect',
   GAME_METADATA: 'game_metadata',
   ADVENTURER_MOVE: 'adventurer_move',
+  TARGET_MONSTER: 'target_monster',
 };

@@ -1,17 +1,18 @@
-const adventurerCanMove = require('./utils/adventurerCanMove');
+const entityCanMove = require('./utils/entityCanMove');
 const addMovementCooldown = require('./utils/addMovementCooldown');
 const { game, tiles } = require('../constants');
 
 //  TODO: We can optimize this function
 //  Try to do this in O(1) (Will need previous map preparation)
-module.exports = (adventurersMetadatas, adventurerId, map, monstersIds) => {
-  if (!adventurerCanMove(adventurersMetadatas[adventurerId])) {
+module.exports = (adventurer, adventurerId, map, monstersIds) => {
+  if (!entityCanMove(adventurer)) {
+    adventurer.actions.movement = null;
     return;
   }
   let movement;
-  if (adventurersMetadatas[adventurerId].manualActions) {
-    movement = adventurersMetadatas[adventurerId].manualActions.movement;
-    //  TODO: Add automatic behaviour movement
+  if (adventurer.actions) {
+    movement = adventurer.actions.movement;
+    adventurer.actions.movement = null;
   }
   if (movement) {
     let desiredMovementX = 0;
@@ -60,13 +61,13 @@ module.exports = (adventurersMetadatas, adventurerId, map, monstersIds) => {
         }
         if (!isMonsterOnDesiredMovement) {
           //  Move
-          adventurersMetadatas[adventurerId].currentMap.position.x = desiredX;
-          adventurersMetadatas[adventurerId].currentMap.position.y = desiredY;
+          adventurer.currentMap.position.x = desiredX;
+          adventurer.currentMap.position.y = desiredY;
           map.metadata.adventurers[adventurerId].position.x = desiredX;
           map.metadata.adventurers[adventurerId].position.y = desiredY;
 
           //  Add cooldown
-          addMovementCooldown(adventurersMetadatas[adventurerId]);
+          addMovementCooldown(adventurer);
         }
       }
     }

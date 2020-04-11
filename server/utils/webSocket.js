@@ -61,5 +61,8 @@ exports.initialize = (server) => {
       }
       addManualAction(adventurerId, { movement });
     });
+    socket.on(sockets.TARGET_MONSTER, async target => {
+      addManualAction(adventurerId, { target });
+    })
   });
 };

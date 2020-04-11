@@ -1,10 +1,13 @@
 // Preparation
 const getAdventure = require('./utils/getAdventurer');
 const getManualAction = require('./getManualAction');
+const mergeCurrentActionsAndManualActions = require('./utils/mergeCurrentActionsAndManualActions');
 const updateMovementCooldown = require('./updateMovementCooldown');
+const updateAttackCooldown = require('./updateAttackCooldown');
 
 //  Actions
 const moveAdventurer = require('./moveAdventurer');
+const monstersInteractions = require('./monstersInteractions');
 
 const cache = require('../utils/cache');
 const { cachePaths, cacheTtls } = require('../constants');
@@ -16,29 +19,6 @@ const metadataTemplate = (metadata) => {
     adventurers: {},
     adventurer: {},
   };
-};
-
-const monstersInteractions = (
-  adventurersMapMetadatas,
-  adventurer,
-  adventurerId,
-  monstersIds,
-  metadata
-) => {
-  for (let i = 0; i < monstersIds.length; i++) {
-    const monsterId = monstersIds[i];
-    const monsterPosition = metadata.monsters[monsterId].position;
-    const adventurerPosition = metadata.adventurers[adventurerId].position;
-
-    //  Add to map vision if close enough
-    const xDistance = Math.abs(monsterPosition.x - adventurerPosition.x);
-    const yDistance = Math.abs(monsterPosition.y - adventurerPosition.y);
-    if (xDistance <= adventurer.sightRange && yDistance <= adventurer.sightRange) {
-      adventurersMapMetadatas[adventurerId].monsters[monsterId] =
-        metadata.monsters[monsterId];
-    }
-  }
-  return adventurersMapMetadatas;
 };
 
 const adventurersInteractions = (
@@ -61,7 +41,10 @@ const adventurersInteractions = (
     const yDistance = Math.abs(
       otherAdventurerPosition.y - adventurerPosition.y
     );
-    if (xDistance <= adventurer.sightRange && yDistance <= adventurer.sightRange) {
+    if (
+      xDistance <= adventurer.sightRange &&
+      yDistance <= adventurer.sightRange
+    ) {
       adventurersMapMetadatas[adventurerId].adventurers[otherAdventurerId] =
         metadata.adventurers[otherAdventurerId];
     }
@@ -80,22 +63,26 @@ module.exports = async (map, mapId) => {
     //  Preparation
     try {
       adventurersMetadatas[adventurersIds[i]] = await getAdventure(
-        adventurersIds[i], true
+        adventurersIds[i],
+        true
       );
-    } catch(err) {
+    } catch (err) {
       continue;
     }
     const adventurer = adventurersMetadatas[adventurersIds[i]];
 
     //  Get adventurers intents
     adventurer.manualActions = getManualAction(adventurersIds[i]);
+    mergeCurrentActionsAndManualActions(adventurer);
 
     //  Update cooldown and status
     updateMovementCooldown(adventurer);
+    updateAttackCooldown(adventurer);
 
     //  Actions
-    moveAdventurer(adventurersMetadatas, adventurersIds[i], map, monstersIds);
+    moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
     adventurersMapMetadatas[adventurersIds[i]] = metadataTemplate(map.metadata);
+    //  Here will happen the use of attack and skills on monsters
     monstersInteractions(
       adventurersMapMetadatas,
       adventurer,
@@ -103,6 +90,7 @@ module.exports = async (map, mapId) => {
       monstersIds,
       map.metadata
     );
+    //  Here will happen the use of attack, skill and trades to other adventurers
     adventurersInteractions(
       adventurersMapMetadatas,
       adventurer,

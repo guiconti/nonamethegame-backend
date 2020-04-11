@@ -1,5 +1,5 @@
 const findDatabase = require('../../utils/findDatabase');
-const adventurerMetadataTemplate = require('./adventurerMetadataTemplate');
+const entityMetadataTemplate = require('./entityMetadataTemplate');
 const cache = require('../../utils/cache');
 const { cachePaths, cacheTtls, tables } = require('../../constants');
 
@@ -31,9 +31,7 @@ module.exports = (adventurerId, onlyFromCache) => {
     } catch (err) {
       return reject(err);
     }
-    const newAdventurerMetadataTemplate = JSON.parse(
-      JSON.stringify(adventurerMetadataTemplate)
-    );
+    const newAdventurerMetadataTemplate = entityMetadataTemplate(adventurer);
     adventurerData = { ...adventurer, ...newAdventurerMetadataTemplate };
     cache.set(
       cachePaths.ADVENTURER_PREFIX + adventurerId,
