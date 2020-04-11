@@ -37,11 +37,11 @@ module.exports = (adventurer, adventurerId, map) => {
       const desiredX = adventurer.currentMap.position.x + desiredMovementX;
       const desiredY = adventurer.currentMap.position.y + desiredMovementY;
       const isWallOnDesiredMovement =
-        map.layout[desiredY][desiredX] === tiles.WALL ||
         desiredY < 0 ||
         desiredY >= map.layout.length ||
         desiredX < 0 ||
-        desiredX >= map.layout.length;
+        desiredX >= map.layout.length ||
+        map.layout[desiredY][desiredX] === tiles.WALL;
       if (!isWallOnDesiredMovement) {
         const newPositionId = generatePositionId(desiredX, desiredY);
         const isEntityOnDesiredMovement =

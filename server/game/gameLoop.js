@@ -7,9 +7,11 @@ const updateMovementCooldown = require('./updateMovementCooldown');
 const updateAttackCooldown = require('./updateAttackCooldown');
 
 //  Actions
-const monsterAttack = require('./monsterAttack');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
+const calculateNextMonsterMovement = require('./calculateNextMonsterMovement');
+const moveMonster = require('./moveMonster');
+const monsterAttack = require('./monsterAttack');
 const addIfBestTarget = require('./addIfBestTarget');
 
 //  Vision
@@ -53,7 +55,7 @@ module.exports = async (map, mapId) => {
     updateAttackCooldown(adventurer);
 
     //  Actions
-    moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
+    moveAdventurer(adventurer, adventurersIds[i], map);
     adventurerAttack(adventurer, map.metadata);
 
     //  Vision update
@@ -75,7 +77,12 @@ module.exports = async (map, mapId) => {
     updateAttackCooldown(monster);
 
     //  Actions
-    // TODO: Move Monster if no target
+    calculateNextMonsterMovement(
+      monster,
+      adventurersMetadatas,
+      map
+    );
+    moveMonster(monster);
     monsterAttack(monster, monstersIds[i], adventurersMetadatas, map.metadata);
     monster.temporaryTarget = null;
     //  Last iteration through adventures to add relationships between monster and adventurer
