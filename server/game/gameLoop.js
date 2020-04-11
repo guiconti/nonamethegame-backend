@@ -17,6 +17,9 @@ const mapMetadataTemplate = require('./utils/mapMetadataTemplate');
 const addMonsterToAdventurerSight = require('./addMonsterToAdventurerSight');
 const addAdventurersToAdventurerSight = require('./addAdventurersToAdventurerSight');
 
+//  Finish
+const fillAdventurerInfoToAdventurerMapMetadata = require('./utils/fillAdventurerInfoToAdventurerMapMetadata');
+
 const cache = require('../utils/cache');
 const { cachePaths, cacheTtls } = require('../constants');
 
@@ -83,7 +86,7 @@ module.exports = async (map, mapId) => {
         );
       }
       const adventurer = adventurersMetadatas[adventurersIds[i]];
-      
+
       addIfBestTarget(
         monster,
         monster.position,
@@ -113,8 +116,12 @@ module.exports = async (map, mapId) => {
       adventurersMetadatas[adventurersIds[i]],
       cacheTtls.ADVENTURER
     );
-    adventurersMapMetadatas[adventurersIds[i]].adventurer =
-      map.metadata.adventurers[adventurersIds[i]];
+    fillAdventurerInfoToAdventurerMapMetadata(
+      adventurersMetadatas[adventurersIds[i]],
+      adventurersMapMetadatas[adventurersIds[i]],
+      adventurersIds[i],
+      map.metadata
+    );
   }
   cache.set(cachePaths.MAP_PREFIX + mapId, map, cacheTtls.MAP);
   return adventurersMapMetadatas;
