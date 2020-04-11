@@ -63,22 +63,22 @@ module.exports = (monster, adventurersMetadata, map) => {
   desiredX = monster.position.x + 1;
   desiredY = monster.position.y;
   if (!canMoveToPosition(desiredX, desiredY, map)) {
-    POSSIBLE_MOVEMENTS.slice(POSSIBLE_MOVEMENTS.indexOf(game.DOWN), 1);
+    POSSIBLE_MOVEMENTS.splice(POSSIBLE_MOVEMENTS.indexOf(game.DOWN), 1);
   }
   desiredX = monster.position.x - 1;
   desiredY = monster.position.y;
   if (!canMoveToPosition(desiredX, desiredY, map)) {
-    POSSIBLE_MOVEMENTS.slice(POSSIBLE_MOVEMENTS.indexOf(game.UP), 1);
+    POSSIBLE_MOVEMENTS.splice(POSSIBLE_MOVEMENTS.indexOf(game.UP), 1);
   }
   desiredX = monster.position.x;
   desiredY = monster.position.y + 1;
   if (!canMoveToPosition(desiredX, desiredY, map)) {
-    POSSIBLE_MOVEMENTS.slice(POSSIBLE_MOVEMENTS.indexOf(game.RIGHT), 1);
+    POSSIBLE_MOVEMENTS.splice(POSSIBLE_MOVEMENTS.indexOf(game.RIGHT), 1);
   }
   desiredX = monster.position.x;
   desiredY = monster.position.y - 1;
   if (!canMoveToPosition(desiredX, desiredY, map)) {
-    POSSIBLE_MOVEMENTS.slice(POSSIBLE_MOVEMENTS.indexOf(game.LEFT), 1);
+    POSSIBLE_MOVEMENTS.splice(POSSIBLE_MOVEMENTS.indexOf(game.LEFT), 1);
   }
   monster.actions.movement = POSSIBLE_MOVEMENTS[Math.floor(Math.random() * POSSIBLE_MOVEMENTS.length)];
 };
