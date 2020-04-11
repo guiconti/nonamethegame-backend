@@ -34,6 +34,12 @@ module.exports = (adventurerId, onlyFromCache) => {
     }
     const newAdventurerMetadataTemplate = entityMetadataTemplate(adventurer);
     updateEntityValues(adventurer);
+    if (adventurer.currentHealth > adventurer.health) {
+      adventurer.currentHealth = adventurer.health;
+    }
+    if (adventurer.currentMana > adventurer.mana) {
+      adventurer.currentMana = adventurer.mana;
+    }
     adventurerData = { ...adventurer, ...newAdventurerMetadataTemplate };
     cache.set(
       cachePaths.ADVENTURER_PREFIX + adventurerId,
