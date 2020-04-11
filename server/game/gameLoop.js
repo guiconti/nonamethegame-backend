@@ -10,41 +10,13 @@ const updateAttackCooldown = require('./updateAttackCooldown');
 const monsterAttack = require('./monsterAttack');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
+
+//  Vision
 const addMonsterToAdventurersSights = require('./addMonsterToAdventurersSights');
+const addAdventurersToAdventurerSight = require('./addAdventurersToAdventurerSight');
 
 const cache = require('../utils/cache');
 const { cachePaths, cacheTtls } = require('../constants');
-
-const adventurersInteractions = (
-  adventurersMapMetadatas,
-  adventurer,
-  adventurerId,
-  adventurersIds,
-  metadata
-) => {
-  for (let i = 0; i < adventurersIds.length; i++) {
-    const otherAdventurerId = adventurersIds[i];
-    const otherAdventurerPosition =
-      metadata.adventurers[otherAdventurerId].position;
-    const adventurerPosition = metadata.adventurers[adventurerId].position;
-
-    //  Add to map vision if close enough
-    const xDistance = Math.abs(
-      otherAdventurerPosition.x - adventurerPosition.x
-    );
-    const yDistance = Math.abs(
-      otherAdventurerPosition.y - adventurerPosition.y
-    );
-    if (
-      xDistance <= adventurer.sightRange &&
-      yDistance <= adventurer.sightRange
-    ) {
-      adventurersMapMetadatas[adventurerId].adventurers[otherAdventurerId] =
-        metadata.adventurers[otherAdventurerId];
-    }
-  }
-  return adventurersMapMetadatas;
-};
 
 module.exports = async (map, mapId) => {
   const adventurersMapMetadatas = [];
@@ -53,7 +25,7 @@ module.exports = async (map, mapId) => {
   const adventurersIds = Object.keys(map.metadata.adventurers);
   const monstersIds = Object.keys(map.metadata.monsters);
   fillOccupiedPositions(adventurersIds, monstersIds, map.metadata);
-  
+
   //  Run adventurers steps
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
@@ -78,6 +50,15 @@ module.exports = async (map, mapId) => {
     //  Actions
     moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
     adventurerAttack(adventurer, adventurersIds[i], map.metadata);
+
+    //  Vision update
+    addAdventurersToAdventurerSight(
+      adventurersMapMetadatas,
+      adventurer,
+      adventurersIds[i],
+      adventurersIds,
+      map.metadata
+    );
   }
 
   //  Run monsters steps
