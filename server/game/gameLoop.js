@@ -7,6 +7,7 @@ const updateMovementCooldown = require('./updateMovementCooldown');
 const updateAttackCooldown = require('./updateAttackCooldown');
 
 //  Actions
+const monsterAttack = require('./monsterAttack');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
 const addMonstersInSight = require('./addMonstersInSight');
@@ -61,6 +62,18 @@ module.exports = async (map, mapId) => {
   const adventurersIds = Object.keys(map.metadata.adventurers);
   const monstersIds = Object.keys(map.metadata.monsters);
   fillOccupiedPositions(adventurersIds, monstersIds, map.metadata);
+  //  Run monsters first
+  for (let i = 0; i < monstersIds.length; i++) {
+    const monsterId = monstersIds[i];
+    const monster = map.metadata.monsters[monsterId];
+
+    //  Update cooldown and status
+    updateMovementCooldown(adventurer);
+    updateAttackCooldown(adventurer);
+
+    //  Actions
+    monsterAttack(adventurer, adventurersIds[i], map.metadata);
+  }
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
     try {
@@ -83,7 +96,7 @@ module.exports = async (map, mapId) => {
 
     //  Actions
     moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
-    adventurerAttack(adventurer, adventurersIds[i], map.metadata)
+    adventurerAttack(adventurer, adventurersIds[i], map.metadata);
 
     //  Update map's vision for adventurer
     adventurersMapMetadatas[adventurersIds[i]] = metadataTemplate(map.metadata);
