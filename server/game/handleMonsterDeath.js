@@ -1,4 +1,5 @@
-module.exports = (monster, monsterId, mapMetadata) => {
+module.exports = (monster, monsterId, map) => {
   //  TODO: Send loot, experience and battle message to killer
-  delete(mapMetadata.monsters[monsterId]);
+  delete(map.metadata.monsters[monsterId]);
+  map.spawn[monster._id].spawned--;
 };

@@ -1,5 +1,6 @@
 // Preparation
 const fillOccupiedPositions = require('./utils/fillOccupiedPositions');
+const spawnMonsters = require('./spawnMonsters');
 const getAdventure = require('./utils/getAdventurer');
 const getManualAction = require('./getManualAction');
 const mergeCurrentActionsAndManualActions = require('./utils/mergeCurrentActionsAndManualActions');
@@ -33,7 +34,7 @@ module.exports = async (map, mapId) => {
   const adventurersIds = Object.keys(map.metadata.adventurers);
   const monstersIds = Object.keys(map.metadata.monsters);
   fillOccupiedPositions(adventurersIds, monstersIds, map.metadata);
-
+  spawnMonsters(map);
   //  Run adventurers steps
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
@@ -86,7 +87,7 @@ module.exports = async (map, mapId) => {
     moveMonster(monster);
     monsterAttack(monster, monstersIds[i], adventurersMetadatas, map.metadata);
     if (monster.dead) {
-      handleMonsterDeath(monster, monstersIds[i], map.metadata);
+      handleMonsterDeath(monster, monstersIds[i], map);
       continue;
     }
     monster.temporaryTarget = null;
