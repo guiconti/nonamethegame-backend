@@ -12,6 +12,13 @@ module.exports = (adventurer, adventurerId, mapMetadata) => {
       yDistance <= adventurer.attackRange;
     if (adventurerInRangeToAttack) {
       entityAttackEntity(adventurer, monster);
+    } else {
+      const monsterInSight =
+        xDistance <= adventurer.sightRange &&
+        yDistance <= adventurer.sightRange;
+      if (!monsterInSight) {
+        adventurer.actions.target = null;
+      }
     }
   }
 };
