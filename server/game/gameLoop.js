@@ -8,7 +8,8 @@ const updateAttackCooldown = require('./updateAttackCooldown');
 
 //  Actions
 const moveAdventurer = require('./moveAdventurer');
-const monstersInteractions = require('./monstersInteractions');
+const adventurerAttack = require('./adventurerAttack');
+const addMonstersInSight = require('./addMonstersInSight');
 
 const cache = require('../utils/cache');
 const { cachePaths, cacheTtls } = require('../constants');
@@ -82,10 +83,12 @@ module.exports = async (map, mapId) => {
 
     //  Actions
     moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
-    //  Move monster
+    adventurerAttack(adventurer, adventurersIds[i], map.metadata)
+
+    //  Update map's vision for adventurer
     adventurersMapMetadatas[adventurersIds[i]] = metadataTemplate(map.metadata);
     //  Here will happen the use of attack and skills on monsters
-    monstersInteractions(
+    addMonstersInSight(
       adventurersMapMetadatas,
       adventurer,
       adventurersIds[i],
@@ -93,13 +96,13 @@ module.exports = async (map, mapId) => {
       map.metadata
     );
     //  Here will happen the use of attack, skill and trades to other adventurers
-    adventurersInteractions(
-      adventurersMapMetadatas,
-      adventurer,
-      adventurersIds[i],
-      adventurersIds,
-      map.metadata
-    );
+    // adventurersInteractions(
+    //   adventurersMapMetadatas,
+    //   adventurer,
+    //   adventurersIds[i],
+    //   adventurersIds,
+    //   map.metadata
+    // );
   }
 
   //  Reset occupied position. TODO: Improve so we update occupied positions on the fly

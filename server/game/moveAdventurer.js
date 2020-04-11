@@ -3,9 +3,7 @@ const addMovementCooldown = require('./utils/addMovementCooldown');
 const generatePositionId = require('./utils/generatePositionId');
 const { game, tiles } = require('../constants');
 
-//  TODO: We can optimize this function
-//  Try to do this in O(1) (Will need previous map preparation)
-module.exports = (adventurer, adventurerId, map, monstersIds) => {
+module.exports = (adventurer, adventurerId, map) => {
   if (!entityCanMove(adventurer)) {
     adventurer.actions.movement = null;
     return;
