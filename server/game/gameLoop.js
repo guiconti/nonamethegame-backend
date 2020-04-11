@@ -10,9 +10,11 @@ const updateAttackCooldown = require('./updateAttackCooldown');
 const monsterAttack = require('./monsterAttack');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
+const addIfBestTarget = require('./addIfBestTarget');
 
 //  Vision
-const addMonsterToAdventurersSights = require('./addMonsterToAdventurersSights');
+const mapMetadataTemplate = require('./utils/mapMetadataTemplate');
+const addMonsterToAdventurerSight = require('./addMonsterToAdventurerSight');
 const addAdventurersToAdventurerSight = require('./addAdventurersToAdventurerSight');
 
 const cache = require('../utils/cache');
@@ -49,16 +51,16 @@ module.exports = async (map, mapId) => {
 
     //  Actions
     moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
-    adventurerAttack(adventurer, adventurersIds[i], map.metadata);
+    adventurerAttack(adventurer, map.metadata);
 
     //  Vision update
-    addAdventurersToAdventurerSight(
-      adventurersMapMetadatas,
-      adventurer,
-      adventurersIds[i],
-      adventurersIds,
-      map.metadata
-    );
+    // addAdventurersToAdventurerSight(
+    //   adventurersMapMetadatas,
+    //   adventurer,
+    //   adventurersIds[i],
+    //   adventurersIds,
+    //   map.metadata
+    // );
   }
 
   //  Run monsters steps
@@ -70,20 +72,38 @@ module.exports = async (map, mapId) => {
     updateAttackCooldown(monster);
 
     //  Actions
-    monsterAttack(monster, monstersIds[i], map.metadata);
-
-    // Update map's vision to adventurer
-    addMonsterToAdventurersSights(
-      adventurersMetadatas,
-      adventurersMapMetadatas,
-      monster,
-      monstersIds[i],
-      adventurersIds,
-      map.metadata
-    );
+    // TODO: Move Monster if no target
+    monsterAttack(monster, monstersIds[i], adventurersMetadatas, map.metadata);
+    monster.temporaryTarget = null;
+    //  Last iteration through adventures to add relationships between monster and adventurer
+    for (let j = 0; j < adventurersIds.length; j++) {
+      if (!adventurersMapMetadatas[adventurersIds[i]]) {
+        adventurersMapMetadatas[adventurersIds[i]] = mapMetadataTemplate(
+          map.metadata
+        );
+      }
+      const adventurer = adventurersMetadatas[adventurersIds[i]];
+      
+      addIfBestTarget(
+        monster,
+        monster.position,
+        adventurer,
+        adventurer.currentMap.position
+      );
+      // Update map's vision to adventurer
+      addMonsterToAdventurerSight(
+        adventurer,
+        adventurersIds[i],
+        monster,
+        monstersIds[i],
+        adventurer.currentMap.position,
+        adventurersMapMetadatas,
+        map.metadata
+      );
+    }
   }
 
-  //  Reset occupied position. TODO: Improve so we update occupied positions on the fly
+  //  Reset occupied position.
   map.metadata.occupiedPositions = {};
 
   // Save data to cache and send to players

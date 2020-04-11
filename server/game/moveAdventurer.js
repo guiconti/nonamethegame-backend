@@ -34,10 +34,8 @@ module.exports = (adventurer, adventurerId, map) => {
     }
     if (desiredMovementX !== 0 || desiredMovementY !== 0) {
       //  Check if the player can move
-      const desiredX =
-        map.metadata.adventurers[adventurerId].position.x + desiredMovementX;
-      const desiredY =
-        map.metadata.adventurers[adventurerId].position.y + desiredMovementY;
+      const desiredX = adventurer.currentMap.position.x + desiredMovementX;
+      const desiredY = adventurer.currentMap.position.y + desiredMovementY;
       const isWallOnDesiredMovement =
         map.layout[desiredY][desiredX] === tiles.WALL ||
         desiredY < 0 ||
@@ -46,11 +44,15 @@ module.exports = (adventurer, adventurerId, map) => {
         desiredX >= map.layout.length;
       if (!isWallOnDesiredMovement) {
         const newPositionId = generatePositionId(desiredX, desiredY);
-        const isEntityOnDesiredMovement = map.metadata.occupiedPositions[newPositionId];
+        const isEntityOnDesiredMovement =
+          map.metadata.occupiedPositions[newPositionId];
         //  Look for monsters in the spot
         if (!isEntityOnDesiredMovement) {
           //  Move
-          const oldPositionId = generatePositionId(adventurer.currentMap.position.x, adventurer.currentMap.position.y);
+          const oldPositionId = generatePositionId(
+            adventurer.currentMap.position.x,
+            adventurer.currentMap.position.y
+          );
           map.metadata.occupiedPositions[oldPositionId]--;
           adventurer.currentMap.position.x = desiredX;
           adventurer.currentMap.position.y = desiredY;
