@@ -8,5 +8,8 @@ module.exports = (attacker, defender) => {
   const finalAttack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
   const damage = Math.max(finalAttack - defender.defense, 1);
   defender.currentHealth -= damage;
+  if (defender.currentHealth <= 0) {
+    defender.dead = true;
+  }
   addAttackCooldown(attacker);
 };

@@ -12,6 +12,7 @@ const adventurerAttack = require('./adventurerAttack');
 const calculateNextMonsterMovement = require('./calculateNextMonsterMovement');
 const moveMonster = require('./moveMonster');
 const monsterAttack = require('./monsterAttack');
+const handleMonsterDeath = require('./handleMonsterDeath');
 const addIfBestTarget = require('./addIfBestTarget');
 
 //  Vision
@@ -84,6 +85,10 @@ module.exports = async (map, mapId) => {
     );
     moveMonster(monster);
     monsterAttack(monster, monstersIds[i], adventurersMetadatas, map.metadata);
+    if (monster.dead) {
+      handleMonsterDeath(monster, monstersIds[i], map.metadata);
+      continue;
+    }
     monster.temporaryTarget = null;
     //  Last iteration through adventures to add relationships between monster and adventurer
     for (let j = 0; j < adventurersIds.length; j++) {
@@ -123,6 +128,11 @@ module.exports = async (map, mapId) => {
       adventurersMetadatas[adventurersIds[i]],
       cacheTtls.ADVENTURER
     );
+    if (!adventurersMapMetadatas[adventurersIds[i]]) {
+      adventurersMapMetadatas[adventurersIds[i]] = mapMetadataTemplate(
+        map.metadata
+      );
+    }
     fillAdventurerInfoToAdventurerMapMetadata(
       adventurersMetadatas[adventurersIds[i]],
       adventurersMapMetadatas[adventurersIds[i]],
