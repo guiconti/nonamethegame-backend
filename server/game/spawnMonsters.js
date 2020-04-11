@@ -1,5 +1,6 @@
 const generateUniqueId = require('../utils/generateUniqueId');
 const getMonster = require('./utils/getMonster');
+const getAnAvailablePosition = require('./utils/getAnAvailablePosition');
 
 module.exports = async (map) => {
   for (let i = 0; i < map.spawn.length; i++) {
@@ -10,11 +11,7 @@ module.exports = async (map) => {
         map.spawn[i].id
       );
       map.spawn[map.spawn[i].id].spawned++;
-      //  TODO: Check a correct spot for spawn
-      map.metadata.monsters[monsterId].position = {
-        x: 0,
-        y: 0,
-      };
+      map.metadata.monsters[monsterId].position = getAnAvailablePosition(map);
     }
   }
 }
