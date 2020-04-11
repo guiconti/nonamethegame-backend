@@ -10,19 +10,10 @@ const updateAttackCooldown = require('./updateAttackCooldown');
 const monsterAttack = require('./monsterAttack');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
-const addMonstersInSight = require('./addMonstersInSight');
+const addMonsterToAdventurersSights = require('./addMonsterToAdventurersSights');
 
 const cache = require('../utils/cache');
 const { cachePaths, cacheTtls } = require('../constants');
-
-const metadataTemplate = (metadata) => {
-  return {
-    portals: metadata.portals,
-    monsters: {},
-    adventurers: {},
-    adventurer: {},
-  };
-};
 
 const adventurersInteractions = (
   adventurersMapMetadatas,
@@ -62,18 +53,8 @@ module.exports = async (map, mapId) => {
   const adventurersIds = Object.keys(map.metadata.adventurers);
   const monstersIds = Object.keys(map.metadata.monsters);
   fillOccupiedPositions(adventurersIds, monstersIds, map.metadata);
-  //  Run monsters first
-  for (let i = 0; i < monstersIds.length; i++) {
-    const monsterId = monstersIds[i];
-    const monster = map.metadata.monsters[monsterId];
-
-    //  Update cooldown and status
-    updateMovementCooldown(adventurer);
-    updateAttackCooldown(adventurer);
-
-    //  Actions
-    monsterAttack(adventurer, adventurersIds[i], map.metadata);
-  }
+  
+  //  Run adventurers steps
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
     try {
@@ -97,25 +78,28 @@ module.exports = async (map, mapId) => {
     //  Actions
     moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
     adventurerAttack(adventurer, adventurersIds[i], map.metadata);
+  }
 
-    //  Update map's vision for adventurer
-    adventurersMapMetadatas[adventurersIds[i]] = metadataTemplate(map.metadata);
-    //  Here will happen the use of attack and skills on monsters
-    addMonstersInSight(
+  //  Run monsters steps
+  for (let i = 0; i < monstersIds.length; i++) {
+    const monster = map.metadata.monsters[monstersIds[i]];
+
+    //  Update cooldown and status
+    updateMovementCooldown(monster);
+    updateAttackCooldown(monster);
+
+    //  Actions
+    monsterAttack(monster, monstersIds[i], map.metadata);
+
+    // Update map's vision to adventurer
+    addMonsterToAdventurersSights(
+      adventurersMetadatas,
       adventurersMapMetadatas,
-      adventurer,
-      adventurersIds[i],
-      monstersIds,
+      monster,
+      monstersIds[i],
+      adventurersIds,
       map.metadata
     );
-    //  Here will happen the use of attack, skill and trades to other adventurers
-    // adventurersInteractions(
-    //   adventurersMapMetadatas,
-    //   adventurer,
-    //   adventurersIds[i],
-    //   adventurersIds,
-    //   map.metadata
-    // );
   }
 
   //  Reset occupied position. TODO: Improve so we update occupied positions on the fly
