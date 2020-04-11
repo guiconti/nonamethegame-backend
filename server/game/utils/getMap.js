@@ -29,6 +29,7 @@ module.exports = (mapId, onlyFromCache) => {
     mapData.spawn = map.spawn;
     mapData.metadata.monsters = {};
     mapData.metadata.adventurers = {};
+    mapData.metadata.occupiedPositions = {};
     //  Fill monsters
     for (let i = 0; i < mapData.spawn.length; i++) {
       for (let j = 0; j < mapData.spawn[i].amount; j++) {

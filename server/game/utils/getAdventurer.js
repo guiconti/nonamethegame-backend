@@ -34,7 +34,6 @@ module.exports = (adventurerId, onlyFromCache) => {
     }
     const newAdventurerMetadataTemplate = entityMetadataTemplate(adventurer);
     updateEntityValues(adventurer);
-    console.log(adventurer);
     adventurerData = { ...adventurer, ...newAdventurerMetadataTemplate };
     cache.set(
       cachePaths.ADVENTURER_PREFIX + adventurerId,

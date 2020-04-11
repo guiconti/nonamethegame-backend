@@ -1,4 +1,5 @@
 // Preparation
+const fillOccupiedPositions = require('./utils/fillOccupiedPositions');
 const getAdventure = require('./utils/getAdventurer');
 const getManualAction = require('./getManualAction');
 const mergeCurrentActionsAndManualActions = require('./utils/mergeCurrentActionsAndManualActions');
@@ -58,7 +59,7 @@ module.exports = async (map, mapId) => {
   //  Core loop
   const adventurersIds = Object.keys(map.metadata.adventurers);
   const monstersIds = Object.keys(map.metadata.monsters);
-
+  fillOccupiedPositions(adventurersIds, monstersIds, map.metadata);
   for (let i = 0; i < adventurersIds.length; i++) {
     //  Preparation
     try {
@@ -81,6 +82,7 @@ module.exports = async (map, mapId) => {
 
     //  Actions
     moveAdventurer(adventurer, adventurersIds[i], map, monstersIds);
+    //  Move monster
     adventurersMapMetadatas[adventurersIds[i]] = metadataTemplate(map.metadata);
     //  Here will happen the use of attack and skills on monsters
     monstersInteractions(
@@ -99,6 +101,9 @@ module.exports = async (map, mapId) => {
       map.metadata
     );
   }
+
+  //  Reset occupied position. TODO: Improve so we update occupied positions on the fly
+  map.metadata.occupiedPositions = {};
 
   // Save data to cache and send to players
   for (let i = 0; i < adventurersIds.length; i++) {

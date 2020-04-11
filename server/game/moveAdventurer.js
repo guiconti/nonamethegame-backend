@@ -1,5 +1,6 @@
 const entityCanMove = require('./utils/entityCanMove');
 const addMovementCooldown = require('./utils/addMovementCooldown');
+const generatePositionId = require('./utils/generatePositionId');
 const { game, tiles } = require('../constants');
 
 //  TODO: We can optimize this function
@@ -46,26 +47,21 @@ module.exports = (adventurer, adventurerId, map, monstersIds) => {
         desiredX < 0 ||
         desiredX >= map.layout.length;
       if (!isWallOnDesiredMovement) {
-        let isMonsterOnDesiredMovement = false;
+        const newPositionId = generatePositionId(desiredX, desiredY);
+        const isEntityOnDesiredMovement = map.metadata.occupiedPositions[newPositionId];
         //  Look for monsters in the spot
-        for (let i = 0; i < monstersIds.length; i++) {
-          const monsterPosition =
-            map.metadata.monsters[monstersIds[i]].position;
-          if (
-            monsterPosition.x === desiredX &&
-            monsterPosition.y === desiredY
-          ) {
-            isMonsterOnDesiredMovement = true;
-            break;
-          }
-        }
-        if (!isMonsterOnDesiredMovement) {
+        if (!isEntityOnDesiredMovement) {
           //  Move
+          const oldPositionId = generatePositionId(adventurer.currentMap.position.x, adventurer.currentMap.position.y);
+          map.metadata.occupiedPositions[oldPositionId]--;
           adventurer.currentMap.position.x = desiredX;
           adventurer.currentMap.position.y = desiredY;
           map.metadata.adventurers[adventurerId].position.x = desiredX;
           map.metadata.adventurers[adventurerId].position.y = desiredY;
-
+          if (map.metadata.occupiedPositions[newPositionId] === undefined) {
+            map.metadata.occupiedPositions[newPositionId] = 0;
+          }
+          map.metadata.occupiedPositions[newPositionId]++;
           //  Add cooldown
           addMovementCooldown(adventurer);
         }
