@@ -35,6 +35,16 @@ module.exports = mongoose => {
       type: Number,
       required: true,
     },
+    baseAttackSpeed: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
+    baseMovementSpeed: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
     currentMana: {
       type: Number,
       required: true,

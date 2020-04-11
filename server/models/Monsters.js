@@ -104,17 +104,15 @@ module.exports = mongoose => {
       required: true,
       default: 1,
     },
-    cooldowns: {
-      movement: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      attack: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-    }
+    baseAttackSpeed: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
+    baseMovementSpeed: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
   });
 };

@@ -1,4 +1,4 @@
-const { game } = require('../../constants');
+const { game, engine } = require('../../constants');
 
 module.exports = (entity) => {
   const {
@@ -8,10 +8,10 @@ module.exports = (entity) => {
     baseMagicDefense,
     baseHit,
     baseFlee,
-    movementSpeed,
-    attackSpeed,
     baseHealth,
     baseMana,
+    baseMovementSpeed,
+    baseAttackSpeed,
   } = entity;
   const {
     strength,
@@ -43,10 +43,12 @@ module.exports = (entity) => {
   entity.flee = Math.floor(
     baseFlee + game.AGILITY_MULTIPLIER_TO_FLEE * agility
   );
-  entity.movementSpeed = movementSpeed
-    ? movementSpeed
-    : game.DEFAULT_MOVEMENT_SPEED;
-  entity.attackSpeed = attackSpeed ? attackSpeed : game.DEFAULT_MOVEMENT_SPEED;
-  entity.health = Math.floor(baseHealth + game.VITALITY_INCREMENT_TO_HEALTH * vitality);
-  entity.mana = Math.floor(baseMana + game.INTELLIGENCE_INCREMENT_TO_MANA * intelligence);
+  entity.health = Math.floor(
+    baseHealth + game.VITALITY_INCREMENT_TO_HEALTH * vitality
+  );
+  entity.mana = Math.floor(
+    baseMana + game.INTELLIGENCE_INCREMENT_TO_MANA * intelligence
+  );
+  entity.movementSpeed = Math.floor(engine.TICK_RATE / baseMovementSpeed);
+  entity.attackSpeed = Math.floor(engine.TICK_RATE / baseAttackSpeed);
 };
