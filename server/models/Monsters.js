@@ -74,22 +74,32 @@ module.exports = mongoose => {
         default: 1,
       },
     },
-    attack: {
+    baseAttack: {
       type: Number,
       required: true,
       default: 1,
     },
-    magicAttack: {
+    baseMagicAttack: {
       type: Number,
       required: true,
       default: 1,
     },
-    defense: {
+    baseDefense: {
       type: Number,
       required: true,
       default: 1,
     },
-    magicDefense: {
+    baseMagicDefense: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
+    baseHit: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
+    baseFlee: {
       type: Number,
       required: true,
       default: 1,

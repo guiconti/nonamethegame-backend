@@ -1,6 +1,7 @@
 const findDatabase = require('../../utils/findDatabase');
 const cache = require('../../utils/cache');
 const entityMetadataTemplate = require('./entityMetadataTemplate');
+const updateEntityValues = require('./updateEntityValues');
 const {
   cachePaths,
   cacheTtls,
@@ -28,6 +29,7 @@ module.exports = (monsterId, onlyFromCache) => {
       return reject(err);
     }
     const newMonsterMetadataTemplate = entityMetadataTemplate(monster);
+    updateEntityValues(monster);
     monster = { ...monster, ...newMonsterMetadataTemplate };
     cache.set(cachePaths.MONSTER_PREFIX + monsterId, monster, cacheTtls.MONSTER);
     alreadyRetrievingMonster = false;

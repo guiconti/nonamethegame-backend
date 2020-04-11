@@ -1,5 +1,6 @@
 const findDatabase = require('../../utils/findDatabase');
 const entityMetadataTemplate = require('./entityMetadataTemplate');
+const updateEntityValues = require('./updateEntityValues');
 const cache = require('../../utils/cache');
 const { cachePaths, cacheTtls, tables } = require('../../constants');
 
@@ -32,6 +33,8 @@ module.exports = (adventurerId, onlyFromCache) => {
       return reject(err);
     }
     const newAdventurerMetadataTemplate = entityMetadataTemplate(adventurer);
+    updateEntityValues(adventurer);
+    console.log(adventurer);
     adventurerData = { ...adventurer, ...newAdventurerMetadataTemplate };
     cache.set(
       cachePaths.ADVENTURER_PREFIX + adventurerId,
