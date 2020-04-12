@@ -15,7 +15,7 @@ module.exports = (adventurer, mapMetadata) => {
       xDistance <= adventurer.attackRange &&
       yDistance <= adventurer.attackRange;
     if (adventurerInRangeToAttack) {
-      entityAttackEntity(adventurer, monster);
+      entityAttackEntity(adventurer, monster, adventurer._id);
       if (monster.dead) {
         monster.killer = adventurer._id; 
       }
