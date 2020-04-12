@@ -14,6 +14,7 @@ const sockets = require('./sockets');
 const engine = require('./engine');
 const game = require('./game');
 const monster = require('./monster');
+const item = require('./item');
 
 module.exports = {
   messages,
@@ -32,4 +33,5 @@ module.exports = {
   engine,
   game,
   monster,
+  item,
 };
