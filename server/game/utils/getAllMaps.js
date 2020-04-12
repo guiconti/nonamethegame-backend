@@ -18,6 +18,11 @@ module.exports = () => {
       mapData.metadata.monsters = {};
       mapData.metadata.adventurers = {};
       mapData.metadata.occupiedPositions = {};
+      for (let j = 0; j < mapData.spawn.length; j++) {
+        mapData.spawn[mapData.spawn[j].id] = {
+          spawned: 0
+        };
+      }
       cache.set(cachePaths.MAP_PREFIX + maps[i]._id, mapData, cacheTtls.MAP);
     }
     return resolve(maps);

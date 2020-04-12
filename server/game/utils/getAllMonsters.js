@@ -1,6 +1,8 @@
 const findDatabase = require('../../utils/findDatabase');
 const cache = require('../../utils/cache');
 const getItem = require('./getItem');
+const entityMetadataTemplate = require('./entityMetadataTemplate');
+const updateEntityValues = require('./updateEntityValues');
 const { cachePaths, cacheTtls, tables } = require('../../constants');
 
 module.exports = () => {
@@ -16,6 +18,10 @@ module.exports = () => {
         const item = await getItem(monsters[i].drops[j].id);
         monsters[i].drops[j] = { ...monsters[i].drops[j], ...item };
       }
+      const newMonsterMetadataTemplate = entityMetadataTemplate(monsters[i]);
+      updateEntityValues(monsters[i]);
+      monsters[i].currentHealth = monsters[i].health;
+      monsters[i] = { ...monsters[i], ...newMonsterMetadataTemplate };
       cache.set(
         cachePaths.MONSTER_PREFIX + monsters[i]._id,
         monsters[i],
