@@ -2,6 +2,9 @@ const logger = require('javascript-custom-logger');
 const connectAdventurers = require('../game/connectAdventurers');
 const getActiveMaps = require('../game/utils/getActiveMaps');
 const getMap = require('../game/utils/getMap');
+const getAllItems = require('../game/utils/getAllItems');
+const getAllMonsters = require('../game/utils/getAllMonsters');
+const getAllMaps = require('../game/utils/getAllMaps');
 const gameLoop = require('../game/gameLoop');
 const sendAdventurersMetadatas = require('./sendAdventurersMetadatas');
 const sendDataToDatabase = require('./sendDataToDatabase');
@@ -23,12 +26,20 @@ class Engine {
     // this.currentStartTime = new Date().getTime();
   }
 
-  start() {
+  async start() {
+    await this._prepare();
     this._run();
     this.databaseLoop = setInterval(
       this._updateDatabase,
       this.updateDatabaseInterval
     );
+  }
+
+  async _prepare() {
+    //  Set items and monster into memory for quick access through the game loop
+    await getAllItems();
+    await getAllMonsters();
+    await getAllMaps();
   }
 
   async _run() {
@@ -42,7 +53,7 @@ class Engine {
     //  Connect players
     try {
       await connectAdventurers();
-    } catch(err) {
+    } catch (err) {
       logger.error(err);
     }
     try {

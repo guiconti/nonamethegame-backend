@@ -3,4 +3,5 @@ module.exports = {
   ADVENTURERS: 'Adventurers',
   MAPS: 'Maps',
   MONSTERS: 'Monsters',
+  ITEMS: 'Items',
 };

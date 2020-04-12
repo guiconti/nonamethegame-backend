@@ -118,7 +118,7 @@ module.exports = (mongoose) => {
       {
         id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Item',
+          ref: 'Items',
           required: true,
         },
         chance: {
