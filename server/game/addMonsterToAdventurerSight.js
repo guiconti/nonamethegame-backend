@@ -15,7 +15,14 @@ module.exports = (
     xDistance <= adventurer.sightRange &&
     yDistance <= adventurer.sightRange
   ) {
-    adventurersMapMetadatas[adventurerId].monsters[monsterId] =
-      mapMetadata.monsters[monsterId];
+    adventurersMapMetadatas[adventurerId].monsters[monsterId] = {
+      _id: monsterId,
+      name: mapMetadata.monsters[monsterId].name,
+      level: mapMetadata.monsters[monsterId].level,
+      health: mapMetadata.monsters[monsterId].health,
+      currentHealth: mapMetadata.monsters[monsterId].currentHealth,
+      actions: mapMetadata.monsters[monsterId].actions,
+      position: mapMetadata.monsters[monsterId].position,
+    };
   }
 };
