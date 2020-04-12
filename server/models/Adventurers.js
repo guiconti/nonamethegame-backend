@@ -90,5 +90,5 @@ module.exports = (mongoose) => {
         required: true,
       },
     },
-  });
+  }, { minimize: false });
 };

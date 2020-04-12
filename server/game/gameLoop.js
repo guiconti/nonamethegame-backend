@@ -87,7 +87,7 @@ module.exports = async (map, mapId) => {
     moveMonster(monster);
     monsterAttack(monster, monstersIds[i], adventurersMetadatas, map.metadata);
     if (monster.dead) {
-      await handleMonsterDeath(monster, monstersIds[i], map);
+      await handleMonsterDeath(monster, monstersIds[i], adventurersMetadatas, map);
       continue;
     }
     monster.temporaryTarget = null;
