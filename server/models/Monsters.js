@@ -1,6 +1,6 @@
 const { game, monster } = require('../constants');
 
-module.exports = mongoose => {
+module.exports = (mongoose) => {
   return new mongoose.Schema({
     name: {
       type: String,
@@ -114,5 +114,19 @@ module.exports = mongoose => {
       required: true,
       default: 1,
     },
+    drops: [
+      {
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Item',
+          required: true,
+        },
+        chance: {
+          type: Number,
+          required: true,
+          default: 1,
+        },
+      },
+    ],
   });
 };
