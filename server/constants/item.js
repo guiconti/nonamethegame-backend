@@ -1,7 +1,7 @@
 module.exports = {
-  TYPES: ['Miscellaneous', 'Equipment', 'Consumable', 'Card'],
-  MISCELLANEOUS_TYPE: 'Miscellaneous',
-  EQUIPMENT_TYPE: 'Equipment',
-  CONSUMABLE_TYPE: 'Consumable',
-  CARD_TYPE: 'Card',
+  TYPES: ['miscellaneous', 'equipment', 'consumable', 'card'],
+  MISCELLANEOUS_TYPE: 'miscellaneous',
+  EQUIPMENT_TYPE: 'equipment',
+  CONSUMABLE_TYPE: 'consumable',
+  CARD_TYPE: 'card',
 };

@@ -1,10 +1,10 @@
 const { values, game } = require('../constants');
 
-module.exports = mongoose => {
+module.exports = (mongoose) => {
   return new mongoose.Schema({
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Users'
+      ref: 'Users',
     },
     name: {
       type: String,
@@ -21,7 +21,7 @@ module.exports = mongoose => {
     },
     experienceToNextLevel: {
       type: Number,
-      required: true
+      required: true,
     },
     baseHealth: {
       type: Number,
@@ -71,13 +71,14 @@ module.exports = mongoose => {
     sightRange: {
       type: Number,
       required: true,
-      default: game.DEFAULT_SIGHT_RANGE
+      default: game.DEFAULT_SIGHT_RANGE,
     },
     attackRange: {
       type: Number,
       required: true,
-      default: game.DEFAULT_ATTACK_RANGE
+      default: game.DEFAULT_ATTACK_RANGE,
     },
+    inventory: mongoose.Schema.Inventory,
     currentMap: {
       id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -88,6 +89,6 @@ module.exports = mongoose => {
         type: Object,
         required: true,
       },
-    }
+    },
   });
 };
