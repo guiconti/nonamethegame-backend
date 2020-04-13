@@ -1,4 +1,5 @@
 const socketIO = require('socket.io');
+const parseCookie = require('./parseCookie');
 const { sockets, values, tables, selections } = require('../constants');
 const tokenDecryptor = require('./tokenDecryptor');
 const findDatabase = require('./findDatabase');
@@ -7,15 +8,6 @@ const addManualAction = require('../game/addManualAction');
 const { isValidString, isValidMovement } = require('./validator');
 
 let io;
-
-const parseCookie = (str) =>
-  str
-    .split(';')
-    .map((v) => v.split('='))
-    .reduce((acc, v) => {
-      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-      return acc;
-    }, {});
 
 exports.emit = (namespace, type, content) => {
   io.to(namespace).emit(type, content);
