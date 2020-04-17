@@ -15,7 +15,9 @@ module.exports = async (monster, monsterId, adventurersMetadatas, map) => {
     for (let i = 0; i < drops.length; i++) {
       delete(drops[i].id);
       if (!adventurer.inventory[drops[i].type][drops[i]._id]) {
-        adventurer.inventory[drops[i].type][drops[i]._id].amount = 0;
+        adventurer.inventory[drops[i].type][drops[i]._id] = {
+          amount: 0
+        };
       }
       adventurer.inventory[drops[i].type][drops[i]._id].amount++;
       if (i > 0) {

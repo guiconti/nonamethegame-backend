@@ -1,4 +1,5 @@
 module.exports = {
   MAPS: `${process.cwd()}/server/game/maps/`,
-  ITEMS: `${process.cwd()}/server/game/items/`,
+  CONSUMABLES: `${process.cwd()}/server/game/consumables/`,
+  EQUIPMENTS: `${process.cwd()}/server/game/equipments/`,
 };

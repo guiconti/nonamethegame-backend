@@ -8,7 +8,7 @@ const updateMovementCooldown = require('./updateMovementCooldown');
 const updateAttackCooldown = require('./updateAttackCooldown');
 
 //  Actions
-const useItem = require('./useItem');
+const itemInteraction = require('./itemInteraction');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
 const calculateNextMonsterMovement = require('./calculateNextMonsterMovement');
@@ -58,7 +58,7 @@ module.exports = async (map, mapId) => {
     updateAttackCooldown(adventurer);
 
     //  Actions
-    await useItem(adventurer);
+    await itemInteraction(adventurer);
     moveAdventurer(adventurer, adventurersIds[i], map);
     adventurerAttack(adventurer, map.metadata);
 

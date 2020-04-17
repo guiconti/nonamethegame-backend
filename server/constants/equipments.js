@@ -1,0 +1,4 @@
+module.exports = {
+  COTTON_SHIRT_DEFENSE_BONUS: 1,
+  JACKET_DEFENSE_BONUS: 2,
+}

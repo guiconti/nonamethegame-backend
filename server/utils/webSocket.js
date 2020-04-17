@@ -65,5 +65,14 @@ exports.initialize = (server) => {
       };
       addManualAction(adventurerId, action);
     });
+    socket.on(sockets.EQUIP_ITEM, async itemId => {
+      const action = {
+        item: {
+          _id: itemId,
+          option: item.EQUIP_OPTION,
+        },
+      };
+      addManualAction(adventurerId, action);
+    });
   });
 };

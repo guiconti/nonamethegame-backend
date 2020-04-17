@@ -28,6 +28,9 @@ module.exports = (mongoose) => {
       required: true,
       default: 0,
     },
+    position: {
+      type: String,
+    },
     fileName: {
       type: String,
     }

@@ -14,5 +14,6 @@ module.exports = (
     experience: adventurerMetadata.experience,
     target: adventurerMetadata.actions.target,
     inventory: adventurerMetadata.inventory,
+    equipment: adventurerMetadata.equipment,
   }
 };

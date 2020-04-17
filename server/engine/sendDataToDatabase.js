@@ -21,6 +21,7 @@ module.exports = (map, mapId) => {
         class: adventurer.class,
         attributes: adventurer.attributes,
         inventory: adventurer.inventory,
+        equipment: adventurer.equipment,
         currentMap: adventurer.currentMap,
       };
       updateDatabase(tables.ADVENTURERS, adventurersIds[i], adventurerDataToBeUpdated);
