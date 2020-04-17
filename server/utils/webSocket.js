@@ -1,6 +1,6 @@
 const socketIO = require('socket.io');
 const parseCookie = require('./parseCookie');
-const { sockets, values, tables, selections } = require('../constants');
+const { sockets, values, tables, selections, item } = require('../constants');
 const tokenDecryptor = require('./tokenDecryptor');
 const findDatabase = require('./findDatabase');
 const disconnectAdventurer = require('../game/utils/disconnectAdventurer');
@@ -56,5 +56,14 @@ exports.initialize = (server) => {
     socket.on(sockets.TARGET_MONSTER, async target => {
       addManualAction(adventurerId, { target });
     })
+    socket.on(sockets.USE_ITEM, async itemId => {
+      const action = {
+        item: {
+          _id: itemId,
+          option: item.USE_OPTION,
+        },
+      };
+      addManualAction(adventurerId, action);
+    });
   });
 };

@@ -6,4 +6,8 @@ module.exports = {
   ADVENTURER_MOVE: 'adventurer_move',
   TARGET_MONSTER: 'target_monster',
   BATTLE_LOG_MESSAGE: 'battle_log_message',
+  USE_ITEM: 'use_item',
+  EQUIP_ITEM: 'equip_item',
+  ATTACH_CARD: 'attach_card',
+  DROP_ITEM: 'drop_item',
 };

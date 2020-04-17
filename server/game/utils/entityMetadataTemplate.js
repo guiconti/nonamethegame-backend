@@ -6,6 +6,7 @@ module.exports = (entity) => {
       movement: null,
       target: null,
       attack: null,
+      item: null,
     },
     cooldown: {
       movement: 0,

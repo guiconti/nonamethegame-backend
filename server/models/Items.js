@@ -28,5 +28,8 @@ module.exports = (mongoose) => {
       required: true,
       default: 0,
     },
+    fileName: {
+      type: String,
+    }
   });
 };

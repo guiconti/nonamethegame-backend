@@ -14,5 +14,9 @@ module.exports = (adventurer) => {
       adventurer.manualActions && adventurer.manualActions.attack
         ? adventurer.manualActions.attack
         : adventurer.actions.attack,
+    item:
+      adventurer.manualActions && adventurer.manualActions.item
+        ? adventurer.manualActions.item
+        : adventurer.actions.item,
   };
 };
