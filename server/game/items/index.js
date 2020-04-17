@@ -16,6 +16,4 @@ try {
   //  TODO: Throw error
 }
 
-console.log(items);
-
 module.exports = items;

@@ -78,7 +78,8 @@ module.exports = (mongoose) => {
       required: true,
       default: game.DEFAULT_ATTACK_RANGE,
     },
-    inventory: mongoose.Schema.Inventory,
+    inventory: mongoose.Schema.Inventories,
+    equipment: mongoose.Schema.Equipments,
     currentMap: {
       id: {
         type: mongoose.Schema.Types.ObjectId,
