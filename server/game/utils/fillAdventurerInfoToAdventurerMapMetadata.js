@@ -12,8 +12,10 @@ module.exports = (
     mana: adventurerMetadata.mana,
     currentMana: adventurerMetadata.currentMana,
     experience: adventurerMetadata.experience,
+    experienceToNextLevel: adventurerMetadata.experienceToNextLevel,
     target: adventurerMetadata.actions.target,
     inventory: adventurerMetadata.inventory,
     equipment: adventurerMetadata.equipment,
+    pointsToDistribute: adventurerMetadata.pointsToDistribute,
   }
 };
