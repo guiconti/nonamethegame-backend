@@ -18,5 +18,9 @@ module.exports = (adventurer) => {
       adventurer.manualActions && adventurer.manualActions.item
         ? adventurer.manualActions.item
         : adventurer.actions.item,
+    pointsAdded:
+      adventurer.manualActions && adventurer.manualActions.pointsAdded
+        ? adventurer.manualActions.pointsAdded
+        : adventurer.actions.pointsAdded,
   };
 };

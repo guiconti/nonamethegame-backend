@@ -10,4 +10,5 @@ module.exports = {
   EQUIP_ITEM: 'equip_item',
   ATTACH_CARD: 'attach_card',
   DROP_ITEM: 'drop_item',
+  ADD_POINTS: 'add_points',
 };

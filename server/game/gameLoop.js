@@ -8,6 +8,7 @@ const updateMovementCooldown = require('./updateMovementCooldown');
 const updateAttackCooldown = require('./updateAttackCooldown');
 
 //  Actions
+const addPoints = require('./addPoints');
 const itemInteraction = require('./itemInteraction');
 const moveAdventurer = require('./moveAdventurer');
 const adventurerAttack = require('./adventurerAttack');
@@ -58,6 +59,7 @@ module.exports = async (map, mapId) => {
     updateAttackCooldown(adventurer);
 
     //  Actions
+    await addPoints(adventurer);
     await itemInteraction(adventurer);
     moveAdventurer(adventurer, adventurersIds[i], map);
     adventurerAttack(adventurer, map.metadata);

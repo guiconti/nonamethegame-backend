@@ -17,5 +17,6 @@ module.exports = (
     inventory: adventurerMetadata.inventory,
     equipment: adventurerMetadata.equipment,
     pointsToDistribute: adventurerMetadata.pointsToDistribute,
+    attributes: adventurerMetadata.attributes,
   }
 };

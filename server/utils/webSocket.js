@@ -74,5 +74,11 @@ exports.initialize = (server) => {
       };
       addManualAction(adventurerId, action);
     });
+    socket.on(sockets.ADD_POINTS, async pointsAdded => {
+      const action = {
+        pointsAdded,
+      }
+      addManualAction(adventurerId, action)
+    });
   });
 };
