@@ -29,7 +29,7 @@ module.exports = (monsterId, onlyFromCache) => {
       return reject(err);
     }
     const newMonsterMetadataTemplate = entityMetadataTemplate(monster);
-    updateEntityValues(monster);
+    await updateEntityValues(monster);
     monster.currentHealth = monster.health;
     monster = { ...monster, ...newMonsterMetadataTemplate };
     cache.set(cachePaths.MONSTER_PREFIX + monsterId, monster, cacheTtls.MONSTER);

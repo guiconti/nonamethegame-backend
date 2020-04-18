@@ -1,6 +1,7 @@
 const logger = require('javascript-custom-logger');
 const getItem = require('./utils/getItem');
 const consumables = require('./consumables');
+const updateEntityValues = require('./utils/updateEntityValues');
 const { item: itemConstants } = require('../constants');
 
 module.exports = async (adventurer) => {
@@ -40,7 +41,7 @@ module.exports = async (adventurer) => {
       adventurer.equipment[item.position] = {
         _id: item._id,
       };
-      //  TODO: Recalculate status
+      await updateEntityValues(adventurer);
       break;
     default:
       break;

@@ -33,7 +33,7 @@ module.exports = (adventurerId, onlyFromCache) => {
       return reject(err);
     }
     const newAdventurerMetadataTemplate = entityMetadataTemplate(adventurer);
-    updateEntityValues(adventurer);
+    await updateEntityValues(adventurer);
     if (adventurer.currentHealth > adventurer.health) {
       adventurer.currentHealth = adventurer.health;
     }

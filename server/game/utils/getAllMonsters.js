@@ -19,7 +19,7 @@ module.exports = () => {
         monsters[i].drops[j] = { ...monsters[i].drops[j], ...item };
       }
       const newMonsterMetadataTemplate = entityMetadataTemplate(monsters[i]);
-      updateEntityValues(monsters[i]);
+      await updateEntityValues(monsters[i]);
       monsters[i].currentHealth = monsters[i].health;
       monsters[i] = { ...monsters[i], ...newMonsterMetadataTemplate };
       cache.set(
