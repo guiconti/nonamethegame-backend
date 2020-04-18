@@ -21,4 +21,17 @@ module.exports = {
   AGILITY_MULTIPLIER_TO_FLEE: 0.5,
   VITALITY_INCREMENT_TO_HEALTH: 14,
   INTELLIGENCE_INCREMENT_TO_MANA: 7,
+  EXPERIENCE_TABLE: {
+    1: 100,
+    2: 145,
+    3: 210,
+    4: 300,
+    5: 420,
+    6: 600,
+    7: 850,
+    8: 1200,
+    9: 1600,
+    10: 2100
+  },
+  POINTS_PER_LEVEL: 5
 };

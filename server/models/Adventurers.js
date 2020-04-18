@@ -91,5 +91,10 @@ module.exports = (mongoose) => {
         required: true,
       },
     },
+    pointsToDistribute: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   }, { minimize: false });
 };

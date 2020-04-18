@@ -1,14 +1,15 @@
 const generateMonsterDrops = require('./utils/generateMonsterDrops');
+const checkAndHandleLevelUp = require('./utils/checkAndHandleLevelUp');
 const webSocket = require('../utils/webSocket');
 const { sockets } = require('../constants');
 
 module.exports = async (monster, monsterId, adventurersMetadatas, map) => {
-  //  TODO: Send loot, experience and battle message to killer
   delete map.metadata.monsters[monsterId];
   map.spawn[monster._id].spawned--;
   const drops = await generateMonsterDrops(monster);
   const adventurer = adventurersMetadatas[monster.killer];
   adventurer.experience += monster.experience;
+  checkAndHandleLevelUp(adventurer);
   let dropsText = ``;
   if (drops.length > 0) {
     dropsText = ` Received `;
