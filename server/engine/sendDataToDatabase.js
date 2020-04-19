@@ -23,6 +23,7 @@ module.exports = (map, mapId) => {
         inventory: adventurer.inventory,
         equipment: adventurer.equipment,
         currentMap: adventurer.currentMap,
+        pointsToDistribute: adventurer.pointsToDistribute,
       };
       updateDatabase(tables.ADVENTURERS, adventurersIds[i], adventurerDataToBeUpdated);
       const adventurerIndex = connectedAdventurers.indexOf(adventurersIds[i]);
