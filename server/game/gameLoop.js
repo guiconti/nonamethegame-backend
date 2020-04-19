@@ -94,15 +94,16 @@ module.exports = async (map, mapId) => {
       await handleMonsterDeath(monster, monstersIds[i], adventurersMetadatas, map);
       continue;
     }
+
     monster.temporaryTarget = null;
     //  Last iteration through adventures to add relationships between monster and adventurer
     for (let j = 0; j < adventurersIds.length; j++) {
-      if (!adventurersMapMetadatas[adventurersIds[i]]) {
-        adventurersMapMetadatas[adventurersIds[i]] = mapMetadataTemplate(
+      if (!adventurersMapMetadatas[adventurersIds[j]]) {
+        adventurersMapMetadatas[adventurersIds[j]] = mapMetadataTemplate(
           map.metadata
         );
       }
-      const adventurer = adventurersMetadatas[adventurersIds[i]];
+      const adventurer = adventurersMetadatas[adventurersIds[j]];
 
       addIfBestTarget(
         monster,
@@ -113,7 +114,7 @@ module.exports = async (map, mapId) => {
       // Update map's vision to adventurer
       addMonsterToAdventurerSight(
         adventurer,
-        adventurersIds[i],
+        adventurersIds[j],
         monster,
         monstersIds[i],
         adventurer.currentMap.position,
